@@ -2,9 +2,87 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>FuckTheMode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode Brutaliste</title>
+    <link rel="stylesheet" href="index1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
+    <header>
+        <div class="top-header">
+            <div class="menu-icon"><i class="fa-solid fa-bars"></i></div>
+            <div class="logo">FUCK THE MODE</div>
+            <div class="search-bar">
+                <input type="text" placeholder="">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            </div>
+            <div class="user-actions">
+                <i class="fa-solid fa-filter"></i>
+                <i class="fa-solid fa-arrow-down-short-wide"></i>
+                <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+        </div>
+
+        <nav class="category-nav">
+            <button class="nav-item active" onclick="filterSelection('all')">Tout</button>
+            <button class="nav-item" onclick="filterSelection('chemise')">Chemise</button>
+            <button class="nav-item" onclick="filterSelection('polo')">Polo</button>
+            <button class="nav-item" onclick="filterSelection('t-shirt')">T-shirt</button>
+            <button class="nav-item" onclick="filterSelection('chaussette')">Chaussette</button>
+            <button class="nav-item" onclick="filterSelection('pantalon')">Pantalon</button>
+        </nav>
+    </header>
+
+    <main class="gallery">
+
+        <div class="card chemise"><img src="chemise 1.jpg" alt="Chemise 1"><div class="overlay"></div></div>
+        <div class="card chemise"><img src="chemise 2.jpg" alt="Chemise 2"><div class="overlay"></div></div>
+        <div class="card chemise"><img src="chemise 3.jpeg" alt="Chemise 3"><div class="overlay"></div></div>
+        <div class="card chemise"><img src="chemise 4.webp" alt="Chemise 4"><div class="overlay"></div></div>
+        <div class="card chemise"><img src="chemise 5.webp" alt="Chemise 5"><div class="overlay"></div></div>
+        <div class="card chemise"><img src="chemise 6.webp" alt="Chemise 6"><div class="overlay"></div></div>
+        <div class="card chemise"><img src="chemise 7.avif" alt="Chemise 7"><div class="overlay"></div></div>
+        <div class="card chemise"><img src="chemise 8.webp" alt="Chemise 8"><div class="overlay"></div></div>
+
+        <div class="card polo"><img src="polo1.webp" alt="Polo 1"><div class="overlay"></div></div>
+        <div class="card polo"><img src="polo2.jpg" alt="Polo 2"><div class="overlay"></div></div>
+        <div class="card polo"><img src="polo3.webp" alt="Polo 3"><div class="overlay"></div></div>
+        <div class="card polo"><img src="polo4.jpg" alt="Polo 4"><div class="overlay"></div></div>
+        <div class="card polo"><img src="polo5.jpg" alt="Polo 5"><div class="overlay"></div></div>
+        <div class="card polo"><img src="polo6.jpg" alt="Polo 6"><div class="overlay"></div></div>
+        <div class="card polo"><img src="polo7.jpg" alt="Polo 7"><div class="overlay"></div></div>
+        <div class="card polo"><img src="polo8.webp" alt="Polo 8"><div class="overlay"></div></div>
+
+        <div class="card t-shirt"><img src="tshirt1.jpg" alt="Tshirt 1"><div class="overlay"></div></div>
+        <div class="card t-shirt"><img src="tshirt2.webp" alt="Tshirt 2"><div class="overlay"></div></div>
+        <div class="card t-shirt"><img src="tshirt3.webp" alt="Tshirt 3"><div class="overlay"></div></div>
+        <div class="card t-shirt"><img src="tshirt4.avif" alt="Tshirt 4"><div class="overlay"></div></div>
+        <div class="card t-shirt"><img src="tshirt5.webp" alt="Tshirt 5"><div class="overlay"></div></div>
+        <div class="card t-shirt"><img src="tshirt6.jpg" alt="Tshirt 6"><div class="overlay"></div></div>
+        <div class="card t-shirt"><img src="tshirt7.jpg" alt="Tshirt 7"><div class="overlay"></div></div>
+        <div class="card t-shirt"><img src="tshirt8.jpg" alt="Tshirt 8"><div class="overlay"></div></div>
+
+        <div class="card chaussette"><img src="chaussette1.jpg" alt="Chaussette 1"><div class="overlay"></div></div>
+        <div class="card chaussette"><img src="chaussette2.jpg" alt="Chaussette 2"><div class="overlay"></div></div>
+        <div class="card chaussette"><img src="chaussette3.jpg" alt="Chaussette 3"><div class="overlay"></div></div>
+        <div class="card chaussette"><img src="chaussette4.jpg" alt="Chaussette 4"><div class="overlay"></div></div>
+        <div class="card chaussette"><img src="chaussette5.webp" alt="Chaussette 5"><div class="overlay"></div></div>
+        <div class="card chaussette"><img src="chaussette6.avif" alt="Chaussette 6"><div class="overlay"></div></div>
+        <div class="card chaussette"><img src="chaussette7.jpg" alt="Chaussette 7"><div class="overlay"></div></div>
+        <div class="card chaussette"><img src="chaussette8.jpg" alt="Chaussette 8"><div class="overlay"></div></div>
+
+        <div class="card pantalon"><img src="pantalon1.avif" alt="Pantalon 1"><div class="overlay"></div></div>
+        <div class="card pantalon"><img src="pantalon2.jpeg" alt="Pantalon 2"><div class="overlay"></div></div>
+        <div class="card pantalon"><img src="pantalon3.jpg" alt="Pantalon 3"><div class="overlay"></div></div>
+        <div class="card pantalon"><img src="pantalon4.webp" alt="Pantalon 4"><div class="overlay"></div></div>
+        <div class="card pantalon"><img src="pantalon5.jpg" alt="Pantalon 5"><div class="overlay"></div></div>
+        <div class="card pantalon"><img src="pantalon6.webp" alt="Pantalon 6"><div class="overlay"></div></div>
+        <div class="card pantalon"><img src="pantalon7.avif" alt="Pantalon 7"><div class="overlay"></div></div>
+        <div class="card pantalon"><img src="pantalon8.webp" alt="Pantalon 8"><div class="overlay"></div></div>
+
+    </main>
+
+    <script src="index1.js"></script>
 </body>
 </html>

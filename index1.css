@@ -1,0 +1,143 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: white;
+}
+
+/* HEADER */
+header {
+    background-color: #0E7A98;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.logo {
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: #000;
+}
+
+/* Barre de recherche */
+.search-bar {
+    position: relative;
+    width: 30%;
+}
+.search-bar input {
+    width: 100%;
+    border: 1px solid #fff;
+    background: transparent;
+    border-radius: 20px;
+    padding: 5px 15px;
+    color: white;
+    outline: none;
+}
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+}
+
+.user-actions i {
+    font-size: 1.2rem;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+/* NAVIGATION */
+.category-nav {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px 15px;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.nav-item.active, .nav-item:hover {
+    background-color: #A5C6D1;
+    color: #000;
+    border-radius: 20px;
+}
+
+/* GRILLE */
+.gallery {
+    display: grid;
+    /* Colonnes auto adaptatives */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 15px;
+    padding: 20px;
+}
+
+.card {
+    position: relative;
+    height: 350px;
+    width: 100%;
+    overflow: hidden;
+    background: #1a1a1a;
+    border-radius: 8px;
+}
+
+/* IMAGES */
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Important pour que l'image remplisse le cadre */
+    transition: transform 0.3s;
+}
+
+/* CADRE BLEU (OVERLAY) */
+.overlay {
+    position: absolute;
+    top: 0;              /* On le colle tout en haut */
+    left: 0;             /* On le colle tout à gauche */
+    width: 100%;         /* Il prend toute la largeur */
+    height: 100%;        /* Il prend toute la hauteur */
+    
+    /* Le style du cadre */
+    border: 3px solid #00BFFF;
+    border-radius: 8px;  /* On met le même arrondi que la .card */
+    
+    /* IMPORTANT : Pour que la bordure ne dépasse pas de l'image */
+    box-sizing: border-box; 
+    
+    /* Style visuel */
+    background: rgba(255, 255, 255, 0); /* J'ai mis transparent pour qu'on voie bien l'image */
+    pointer-events: none;
+    
+    /* 'inset' permet de mettre l'ombre brillante vers l'intérieur du cadre */
+    box-shadow: inset 0 0 15px rgba(0, 191, 255, 0.5); 
+}
+
+/* Classe utilitaire pour cacher les éléments */
+.card.hide {
+    display: none;
+}
