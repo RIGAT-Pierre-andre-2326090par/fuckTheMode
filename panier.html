@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Panier</title>
+    <link rel="stylesheet" href="style/panier.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo">FUCK THE MODE</div>
+        <nav class="site-nav">
+            <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Continuer mes achats</a>
+            <div class="cart-icon-container" style="display:inline-block; position:relative; margin-left:20px;">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="cart-container">
+        <h1>Votre Panier</h1>
+        <div class="cart-items" id="cart-items-container">
+            </div>
+
+        <div class="cart-total">
+            <div class="total-row"><span>SOUS-TOTAL</span><span id="subtotal">0.00 $</span></div>
+            <div class="total-row"><span>LIVRAISON</span><span>GRATUITE</span></div>
+            <hr>
+            <div class="total-row final"><span>TOTAL</span><span id="grand-total">0.00 $</span></div>
+            
+            <a href="paiement.html" class="checkout-btn">PASSER AU PAIEMENT</a>
+        </div>
+    </main>
+
+    <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        const container = document.getElementById('cart-items-container');
+        let cart = JSON.parse(localStorage.getItem('productsInCart')) || {};
+        let totalAmount = 0;
+
+        if (Object.keys(cart).length === 0) {
+            container.innerHTML = "<p class='empty-msg'>Votre panier est vide.</p>";
+        } else {
+            Object.keys(cart).forEach(id => {
+                let product = productsDB[id];
+                if(product) {
+                    let quantity = cart[id];
+                    let unitPrice = getPrice(product.price);
+                    let linePrice = unitPrice * quantity;
+                    totalAmount += linePrice;
+
+                    // Dans panier.html, remplace le bloc HTML généré par celui-ci :
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="item-img">
+                                <img src="${product.img}" alt="${product.title}">
+                            </div>
+                            
+                            <div class="item-details">
+                                <h3>${product.title}</h3>
+                                <p class="unit-price">${product.price}</p>
+                                <div class="qty-control">
+                                    <span>Quantité : <strong>${quantity}</strong></span>
+                                </div>
+                            </div>
+                            
+                            <div class="item-actions">
+                                <div class="item-total">${linePrice.toFixed(2)} $</div>
+                                <div class="delete-btn" onclick="deleteItem('${id}')">
+                                    <i class="fa-solid fa-trash"></i> Supprimer
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                }
+            });
+        }
+        document.getElementById('subtotal').innerText = totalAmount.toFixed(2) + " $";
+        document.getElementById('grand-total').innerText = totalAmount.toFixed(2) + " $";
+    </script>
+</body>
+</html>

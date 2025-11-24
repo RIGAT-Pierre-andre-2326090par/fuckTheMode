@@ -1,39 +1,51 @@
-// Fonction principale de filtrage
 function filterSelection(category) {
-    let items = document.getElementsByClassName("card");
+    let items = document.querySelectorAll(".card-link");
+    if (category == 'all') category = '';
     
-    // 1. Gérer l'affichage des produits
-    for (let i = 0; i < items.length; i++) {
-        // Si la catégorie est 'all' ou si l'item a la classe demandée
-        if (category == 'all' || items[i].classList.contains(category)) {
-            items[i].classList.remove("hide"); // On affiche
-        } else {
-            items[i].classList.add("hide"); // On cache
+    items.forEach(item => {
+        let card = item.querySelector(".card");
+        item.style.display = "none";
+        if (category === '' || card.classList.contains(category)) {
+            item.style.display = "block";
         }
-    }
+    });
 
-    // 2. Gérer le style "Active" du menu (la pilule grise)
     let buttons = document.getElementsByClassName("nav-item");
     for (let i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("active"); // On enlève 'active' partout
-        // Note : Dans un vrai projet, il faut cibler le bouton cliqué
-        // Ici on fait simple, on met un event listener sur le clic :
-        if(buttons[i].textContent.toLowerCase() === category.toLowerCase()) {
+        buttons[i].classList.remove("active");
+        if (buttons[i].textContent.toLowerCase() === category || (category === '' && buttons[i].textContent.toLowerCase() === 'tout')) {
              buttons[i].classList.add("active");
         }
     }
 }
+// ... Tes autres fonctions (filterSelection) sont au-dessus ...
 
-// Pour gérer le bouton actif visuellement au clic (plus précis)
-var btnContainer = document.querySelector(".category-nav");
-var btns = btnContainer.getElementsByClassName("nav-item");
+function searchProducts() {
+    // 1. On récupère ce que l'utilisateur tape (en minuscule)
+    let input = document.getElementById('search-input').value.toLowerCase();
+    
+    // 2. On cible toutes les cartes produits (les liens <a>)
+    let cards = document.querySelectorAll('.card-link');
 
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    if (current.length > 0) { 
-      current[0].className = current[0].className.replace(" active", "");
-    }
-    this.className += " active";
-  });
+    cards.forEach(card => {
+        // 3. On extrait l'ID depuis le lien (ex: "produit.html?id=chemise1" -> "chemise1")
+        let url = card.getAttribute('href');
+        
+        // Sécurité : on vérifie que le lien contient bien un ID
+        if (url && url.includes('id=')) {
+            let id = url.split('id=')[1]; // Récupère "chemise1"
+
+            // 4. On cherche le VRAI TITRE dans data.js
+            if (productsDB[id]) {
+                let title = productsDB[id].title.toLowerCase();
+
+                // 5. Si le titre contient la recherche, on affiche, sinon on cache
+                if (title.includes(input)) {
+                    card.style.display = ""; // Affiche (respecte le CSS par défaut)
+                } else {
+                    card.style.display = "none"; // Cache
+                }
+            }
+        }
+    });
 }

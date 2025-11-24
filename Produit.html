@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Détail Produit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style/Produits.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo">FUCK THE MODE</div>
+    <nav class="site-nav">
+      <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Retour</a>
+      <div class="cart-icon-container" style="display:inline-block; position:relative; margin-left:20px; cursor:pointer;" onclick="window.location.href='panier.html'">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span id="cart-count">0</span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="site-main">
+    <section class="product-page">
+        <div class="product-image">
+            <img id="product-img" src="" alt="Image produit">
+        </div>
+
+        <div class="product-info">
+            <h1 id="product-title" class="product-title">Chargement...</h1>
+            <p id="product-price" class="product-price">-- $</p>
+            <p id="product-desc" class="description">...</p>
+            
+            <div class="selectors">
+                <div class="selector-group">
+                    <label>Taille :</label>
+                    <div class="size-options">
+                        <span>S</span><span>M</span><span class="selected">L</span><span>XL</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="add-cart">AJOUTER AU PANIER</button>
+        </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 FUCK THE MODE.</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+      const product = productsDB[productId];
+
+      if (product) {
+          document.getElementById('product-img').src = product.img;
+          document.getElementById('product-title').innerText = product.title;
+          document.getElementById('product-price').innerText = product.price;
+          document.getElementById('product-desc').innerText = product.desc;
+
+          // CORRECTION: On attache l'événement click ici pour être sûr que ça marche
+          const btn = document.querySelector('.add-cart');
+          btn.onclick = function() {
+              addToCart(productId);
+          };
+      } else {
+          document.querySelector('.product-info').innerHTML = "<h1>Erreur : Produit introuvable</h1>";
+      }
+  </script>
+
+</body>
+</html>
