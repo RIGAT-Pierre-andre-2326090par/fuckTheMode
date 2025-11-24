@@ -14,7 +14,58 @@ body {
   padding: 1rem 2rem;
   border-bottom: 1px solid #333;
 }
+.product-page {
+    display: flex;
+    gap: 40px;
+    padding: 40px 0;
+    align-items: flex-start;
+}
 
+.product-image img {
+    width: 420px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-title {
+    margin-bottom: 15px;
+    font-size: 32px;
+}
+
+.product-price {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.product-size span,
+.product-colors span {
+    margin-right: 8px;
+}
+
+.color-swatch {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
+.add-cart {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
 .logo {
   font-weight: 700;
   text-transform: lowercase;
