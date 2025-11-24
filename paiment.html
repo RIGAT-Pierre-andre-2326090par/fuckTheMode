@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Vêtements - Paiement en Ligne</title>
+    <link rel="stylesheet" href="style/paiement.css">
+</head>
+<body>
+
+<header>
+    <h1>Shop Vêtements</h1>
+    <p>Paiement en ligne sécurisé</p>
+</header>
+
+<nav>
+    <a href="#products">Produits</a>
+    <a href="#checkout">Paiement</a>
+</nav>
+
+<section id="products" class="products">
+    <div class="product">
+        <img src="https://via.placeholder.com/200x200.png?text=T-shirt+1" alt="T-shirt 1">
+        <h3>T-shirt Classique</h3>
+        <p>Prix : 36 $CAD</p>
+    </div>
+    <div class="product">
+        <img src="https://via.placeholder.com/200x200.png?text=Jean+1" alt="Jean 1">
+        <h3>Jean Slim</h3>
+        <p>Prix : 72 $CAD</p>
+    </div>
+    <div class="product">
+        <img src="https://via.placeholder.com/200x200.png?text=Veste+1" alt="Veste 1">
+        <h3>Veste Hiver</h3>
+        <p>Prix : 108 $CAD</p>
+    </div>
+</section>
+
+<section id="checkout" class="checkout-form">
+    <h2>Formulaire de Paiement</h2>
+    <form>
+        <label for="name">Nom complet</label>
+        <input type="text" id="name" name="name" placeholder="Ex: Abdoul Karim Souaré" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="exemple@mail.com" required>
+
+        <label for="product">Produit</label>
+        <select id="product" name="product">
+            <option value="tshirt">T-shirt Classique - 36 $CAD</option>
+            <option value="jean">Jean Slim - 72 $CAD</option>
+            <option value="veste">Veste Hiver - 108 $CAD</option>
+        </select>
+
+        <label for="card">Numéro de carte bancaire</label>
+        <input type="text" id="card" name="card" placeholder="0000 0000 0000 0000" required>
+
+        <label for="expiry">Date d'expiration</label>
+        <input type="text" id="expiry" name="expiry" placeholder="MM/AA" required>
+
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" name="cvv" placeholder="123" required>
+
+        <button type="submit">Payer Maintenant</button>
+    </form>
+</section>
+
+<footer>
+    &copy; 2025 Shop Vêtements. Tous droits réservés.
+</footer>
+
+</body>
+</html>
