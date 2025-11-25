@@ -115,7 +115,6 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover; /* L'image remplit le carré sans déformation */
-    filter: grayscale(100%);
 }
 
 /* Infos Texte */
@@ -276,5 +275,34 @@ footer {
     
     .checkout-container {
         padding: 0 10px;
+    }
+}
+
+/* =========================================
+   VERSION MOBILE
+   ========================================= */
+@media (max-width: 768px) {
+    
+    .checkout-container {
+        padding: 0 15px;
+        margin: 20px auto;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    /* Formulaire plus compact */
+    .checkout-form {
+        padding: 15px;
+    }
+
+    /* Ajustement de la liste récapitulative */
+    .item-info .price {
+        font-size: 1rem;
+    }
+    
+    .item-info h3 {
+        font-size: 0.9rem;
     }
 }

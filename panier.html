@@ -6,6 +6,7 @@
     <title>Mon Panier</title>
     <link rel="stylesheet" href="style/panier.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style/theme.css">
 </head>
 <body>
 
@@ -38,52 +39,56 @@
     <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
 
     <script src="js/data.js"></script>
-    <script src="js/cart.js"></script>
-    <script>
-        const container = document.getElementById('cart-items-container');
-        let cart = JSON.parse(localStorage.getItem('productsInCart')) || {};
-        let totalAmount = 0;
+<script src="js/cart.js"></script>
+<script>
+    const container = document.getElementById('cart-items-container');
+    let cart = JSON.parse(localStorage.getItem('productsInCart')) || {};
+    let totalAmount = 0;
 
-        if (Object.keys(cart).length === 0) {
-            container.innerHTML = "<p class='empty-msg'>Votre panier est vide.</p>";
-        } else {
-            Object.keys(cart).forEach(id => {
-                let product = productsDB[id];
-                if(product) {
-                    let quantity = cart[id];
-                    let unitPrice = getPrice(product.price);
-                    let linePrice = unitPrice * quantity;
-                    totalAmount += linePrice;
+    if (Object.keys(cart).length === 0) {
+        container.innerHTML = "<p class='empty-msg'>Votre panier est vide.</p>";
+    } else {
+        // On boucle sur les clés du panier (ex: "chemise1-L", "polo2-M")
+        Object.keys(cart).forEach(uniqueKey => {
+            
+            // ON DÉCOUPE LA CLÉ : ID à gauche, Taille à droite
+            // split('-') coupe la chaine là où il y a le tiret
+            let splitKey = uniqueKey.split('-');
+            let productId = splitKey[0]; // ex: chemise1
+            let size = splitKey[1];      // ex: L
 
-                    // Dans panier.html, remplace le bloc HTML généré par celui-ci :
-                    container.innerHTML += `
-                        <div class="cart-item">
-                            <div class="item-img">
-                                <img src="${product.img}" alt="${product.title}">
-                            </div>
+            let product = productsDB[productId];
+            
+            if(product) {
+                let quantity = cart[uniqueKey];
+                let unitPrice = getPrice(product.price);
+                let linePrice = unitPrice * quantity;
+                totalAmount += linePrice;
+
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="item-img"><img src="${product.img}" alt="${product.title}"></div>
+                        <div class="item-details">
+                            <h3>${product.title}</h3>
+                            <p class="unit-price">${product.price}</p>
+                            <p style="color:#aaa; font-size:0.9rem;">Taille : <strong style="color:white;">${size}</strong></p>
                             
-                            <div class="item-details">
-                                <h3>${product.title}</h3>
-                                <p class="unit-price">${product.price}</p>
-                                <div class="qty-control">
-                                    <span>Quantité : <strong>${quantity}</strong></span>
-                                </div>
-                            </div>
-                            
-                            <div class="item-actions">
-                                <div class="item-total">${linePrice.toFixed(2)} $</div>
-                                <div class="delete-btn" onclick="deleteItem('${id}')">
-                                    <i class="fa-solid fa-trash"></i> Supprimer
-                                </div>
+                            <div class="qty-control"><span>Quantité : <strong>${quantity}</strong></span></div>
+                        </div>
+                        <div class="item-actions">
+                            <div class="item-total">${linePrice.toFixed(2)} $</div>
+                            <div class="delete-btn" onclick="deleteItem('${uniqueKey}')">
+                                <i class="fa-solid fa-trash"></i> Supprimer
                             </div>
                         </div>
-                    `;
-
-                }
-            });
-        }
-        document.getElementById('subtotal').innerText = totalAmount.toFixed(2) + " $";
-        document.getElementById('grand-total').innerText = totalAmount.toFixed(2) + " $";
-    </script>
+                    </div>
+                `;
+            }
+        });
+    }
+    document.getElementById('subtotal').innerText = totalAmount.toFixed(2) + " $";
+    document.getElementById('grand-total').innerText = totalAmount.toFixed(2) + " $";
+</script>
+    <script src="js/theme.js"></script>
 </body>
 </html>

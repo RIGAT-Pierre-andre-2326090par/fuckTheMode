@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte</title>
+    <link rel="stylesheet" href="style/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style/theme.css">
+</head>
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Accueil</a>
+        <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
+        <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
+        <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
+        <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+    </div>
+
+    <header class="site-header">
+        <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo">FUCK THE MODE</div>
+        <div class="cart-icon-container" onclick="window.location.href='panier.html'">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <h1>Mon Profil</h1>
+
+        <div class="profile-header">
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info">
+                <h2>Utilisateur Invité</h2>
+                <p>client@fuckthemode.com</p>
+                <p style="color:#00BFFF; font-size:0.9rem; margin-top:5px;">Membre depuis 2025</p>
+            </div>
+        </div>
+
+        <div class="order-history">
+            <h2>Mes dernières commandes</h2>
+            
+            <div class="order-item">
+                <div>
+                    <p style="font-weight:bold;">Commande #4923</p>
+                    <p style="font-size:0.8rem; color:#777;">2 articles • 105.00 $</p>
+                </div>
+                <span class="order-status status-delivered">LIVRÉ</span>
+            </div>
+
+            <div class="order-item">
+                <div>
+                    <p style="font-weight:bold;">Commande #4988</p>
+                    <p style="font-size:0.8rem; color:#777;">1 article • 45.00 $</p>
+                </div>
+                <span class="order-status status-pending">EN COURS</span>
+            </div>
+        </div>
+
+        <button class="btn-submit" style="background:#333; color:white; margin-top:20px; width:100%;">Déconnexion</button>
+    </main>
+
+    <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+
+    <script src="js/favorites.js"></script> <script src="js/cart.js"></script>
+<script src="js/theme.js"></script>
+</body>
+</html>

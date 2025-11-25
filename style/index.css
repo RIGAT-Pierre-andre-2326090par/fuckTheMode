@@ -8,7 +8,6 @@ header { background-color: #0E7A98; padding: 15px 20px; position: sticky; top: 0
 .search-bar { position: relative; width: 30%; }
 .search-bar input { width: 100%; border: 1px solid #fff; background: transparent; border-radius: 20px; padding: 5px 15px; color: white; outline: none; }
 .search-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: white; }
-.user-actions i { font-size: 1.2rem; margin-left: 15px; cursor: pointer; color:white; }
 
 /* Compteur Panier */
 #cart-count { position: absolute; top: -8px; right: -10px; background-color: red; color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 50%; border: 1px solid #000; }
@@ -23,9 +22,175 @@ a.card-link { text-decoration: none; display: block; color: inherit; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; padding: 20px; }
 .card { position: relative; height: 350px; width: 100%; overflow: hidden; background: #1a1a1a; border-radius: 8px; }
 
-/* IMAGES & EFFETS */
-.card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.1); transition: filter 0.4s ease, transform 0.4s ease; }
-.card:hover img { filter: grayscale(0%) contrast(1); transform: scale(1.05); }
+/* IMAGES & EFFETS (COULEUR PERMANENTE) */
+.card img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    /* J'ai supprimé filter: grayscale... */
+    transition: transform 0.4s ease; 
+}
+
+.card:hover img { 
+    /* Plus de changement de filtre, juste le zoom */
+    transform: scale(1.05); 
+}
 
 /* OVERLAY (Cadre Bleu) */
 .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 3px solid #00BFFF; border-radius: 8px; box-sizing: border-box; background: rgba(255, 255, 255, 0); pointer-events: none; box-shadow: inset 0 0 15px rgba(0, 191, 255, 0.5); }
+
+/* =========================================
+   VERSION MOBILE 
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Header en colonne */
+    .top-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    /* 2. Logo et Icônes sur la même ligne pour gagner de la place */
+    .logo {
+        width: 100%;
+        text-align: center;
+        order: 1; /* Le logo en premier */
+        margin-bottom: 10px;
+    }
+
+    .user-actions {
+        width: 100%;
+        display: flex;
+        justify-content: center; /* Centre les icônes */
+        order: 3; /* Les icônes en dernier */
+        margin-top: 10px;
+    }
+
+    /* 3. Barre de recherche large */
+    .search-bar {
+        width: 100%;
+        order: 2; /* La barre au milieu */
+    }
+
+    /* 4. Navigation (Scroll horizontal) */
+    .category-nav {
+        padding-bottom: 10px;
+        /* On cache la scrollbar moche mais on garde le scroll */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .category-nav::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+    }
+
+    /* 5. Grille Produits : 2 colonnes sur mobile */
+    .gallery {
+        grid-template-columns: repeat(2, 1fr); /* Force 2 colonnes */
+        gap: 10px;
+        padding: 10px;
+    }
+
+    /* Réduire un peu la hauteur des cartes sur mobile */
+    .card {
+        height: 250px; 
+    }
+}
+/* --- 1. MENU LATÉRAL (SIDEBAR) --- */
+.sidebar {
+    height: 100%;
+    width: 0; /* Caché par défaut */
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: #0E7A98; /* Bleu canard */
+    overflow-x: hidden;
+    transition: 0.5s; /* Animation d'ouverture */
+    padding-top: 60px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+}
+
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    border: none;
+}
+
+/* Icônes dans le menu */
+.sidebar i {
+    width: 30px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* --- 2. TEXTE SOUS LES PRODUITS (INDEX) --- */
+.card-link {
+    /* On enlève la hauteur fixe pour laisser la place au texte */
+    height: auto; 
+    margin-bottom: 20px;
+}
+
+.card {
+    height: 300px; /* Hauteur de l'image fixe */
+    margin-bottom: 10px;
+}
+
+.card-info {
+    padding: 0 5px;
+}
+
+.card-title {
+    font-family: 'Times New Roman', serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.card-price {
+    color: #00BFFF;
+    font-weight: bold;
+}
+
+/* --- 3. ICONE FAVORIS (COEUR) --- */
+.fav-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    font-size: 1.5rem;
+    color: white; /* Blanc par défaut */
+    cursor: pointer;
+    filter: drop-shadow(0 0 3px black); /* Ombre pour visibilité */
+    transition: transform 0.2s;
+}
+
+.fav-btn:hover {
+    transform: scale(1.2);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .sidebar { padding-top: 100px; }
+    .sidebar a { font-size: 1rem; }
+    .card { height: 250px; }
+}

@@ -110,3 +110,44 @@ hr { border: 0; height: 1px; background: #333; margin: 15px 0; }
         align-items: center;
     }
 }
+
+/* =========================================
+   VERSION MOBILE
+   ========================================= */
+@media (max-width: 768px) {
+
+    .cart-container {
+        padding: 0 10px;
+        margin-top: 20px;
+    }
+
+    /* Réorganisation de la ligne produit */
+    .cart-item {
+        flex-wrap: wrap; /* Permet aux éléments de passer à la ligne */
+        gap: 10px;
+    }
+
+    .item-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .item-details {
+        width: calc(100% - 90px); /* Prend le reste de la place à côté de l'image */
+    }
+
+    .item-details h3 {
+        font-size: 1rem;
+    }
+
+    /* Mettre les actions (Prix + Supprimer) sur une ligne en dessous */
+    .item-actions {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #333;
+        padding-top: 10px;
+        margin-top: 5px;
+    }
+}

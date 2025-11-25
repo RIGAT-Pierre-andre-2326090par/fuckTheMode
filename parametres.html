@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres</title>
+    <link rel="stylesheet" href="style/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style/theme.css">
+</head>
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Accueil</a>
+        <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
+        <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
+        <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
+        <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+    </div>
+
+    <header class="site-header">
+        <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo">FUCK THE MODE</div>
+        <div class="cart-icon-container" onclick="window.location.href='panier.html'">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <h1>Paramètres</h1>
+
+        <div class="settings-group">
+            <h3 style="margin-bottom:15px; color:#aaa;">NOTIFICATIONS</h3>
+            
+            <div class="setting-item">
+                <span>Recevoir les promos par Email</span>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            
+            <div class="setting-item">
+                <span>Notification de commande</span>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h3 style="margin-bottom:15px; color:#aaa;">SÉCURITÉ</h3>
+            
+            <div class="setting-item">
+                <span>Authentification à deux facteurs</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+
+            <div class="setting-item">
+                <span>Changer de mot de passe</span>
+                <i class="fa-solid fa-chevron-right" style="color:#666;"></i>
+            </div>
+        </div>
+
+        <div class="settings-group">
+    <h3 style="margin-bottom:15px; color:#aaa;">APPARENCE</h3>
+    <div class="setting-item">
+        <span>Mode Clair</span>
+        <label class="switch">
+            <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
+            <span class="slider"></span>
+        </label>
+    </div>
+</div>
+
+<script src="js/theme.js"></script>
+<script>
+    // Petit script pour que le bouton soit dans la bonne position au chargement
+    document.addEventListener("DOMContentLoaded", () => {
+        const theme = localStorage.getItem('siteTheme');
+        const toggle = document.getElementById('theme-toggle');
+        // Si le thème est 'light', on coche la case
+        if (theme === 'light') {
+            toggle.checked = true;
+        } else {
+            toggle.checked = false;
+        }
+    });
+</script>
+    </main>
+
+    <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+
+    <script src="js/favorites.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style/Produits.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style/theme.css">
 </head>
 <body>
 
@@ -43,6 +44,15 @@
             <button class="add-cart">AJOUTER AU PANIER</button>
         </div>
     </section>
+    <section class="recommendations-section">
+      <h2 class="section-title">Vous aimerez aussi</h2>
+      
+      <div class="recommendation-grid" id="recommendation-container">
+          </div>
+  </section>
+
+  <footer class="site-footer">
+
   </main>
 
   <footer class="site-footer">
@@ -50,27 +60,74 @@
   </footer>
 
   <script src="js/data.js"></script>
-  <script src="js/cart.js"></script>
-  <script>
-      const params = new URLSearchParams(window.location.search);
-      const productId = params.get('id');
-      const product = productsDB[productId];
+<script src="js/cart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        const product = productsDB[productId];
+        
+        // Variable pour stocker la taille choisie (L par défaut)
+        let selectedSize = 'L'; 
 
-      if (product) {
-          document.getElementById('product-img').src = product.img;
-          document.getElementById('product-title').innerText = product.title;
-          document.getElementById('product-price').innerText = product.price;
-          document.getElementById('product-desc').innerText = product.desc;
+        if (product) {
+            document.getElementById('product-img').src = product.img;
+            document.getElementById('product-title').innerText = product.title;
+            document.getElementById('product-price').innerText = product.price;
+            document.getElementById('product-desc').innerText = product.desc;
 
-          // CORRECTION: On attache l'événement click ici pour être sûr que ça marche
-          const btn = document.querySelector('.add-cart');
-          btn.onclick = function() {
-              addToCart(productId);
-          };
-      } else {
-          document.querySelector('.product-info').innerHTML = "<h1>Erreur : Produit introuvable</h1>";
-      }
-  </script>
+            // GESTION DU CLIC SUR LES TAILLES
+            const sizeSpans = document.querySelectorAll('.size-options span');
+            sizeSpans.forEach(span => {
+                span.addEventListener('click', function() {
+                    // 1. On enlève la classe 'selected' partout
+                    sizeSpans.forEach(s => s.classList.remove('selected'));
+                    // 2. On l'ajoute sur celui cliqué
+                    this.classList.add('selected');
+                    // 3. On enregistre la taille
+                    selectedSize = this.innerText;
+                });
+            });
 
+            // GESTION DU BOUTON AJOUTER
+            const btn = document.querySelector('.add-cart');
+            btn.onclick = function() {
+                // On envoie l'ID ET la taille au panier
+                addToCart(productId, selectedSize);
+            };
+            
+            // Lancer les recommandations (si tu as gardé le code précédent)
+            if (typeof generateRecommendations === "function") {
+                generateRecommendations(productId);
+            }
+
+        } else {
+            document.querySelector('.product-info').innerHTML = "<h1>Erreur : Produit introuvable</h1>";
+        }
+    });
+
+    // Code des recommandations 
+    function generateRecommendations(currentId) {
+        const container = document.getElementById('recommendation-container');
+        if(!container) return;
+        container.innerHTML = "";
+        let allIds = Object.keys(productsDB);
+        let availableIds = allIds.filter(id => id !== currentId);
+        for (let i = availableIds.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [availableIds[i], availableIds[j]] = [availableIds[j], availableIds[i]];
+        }
+        let selectedIds = availableIds.slice(0, 3);
+        selectedIds.forEach(id => {
+            let recProduct = productsDB[id];
+            container.innerHTML += `
+                <a href="produit.html?id=${id}" class="rec-card">
+                    <div class="rec-img-box"><img src="${recProduct.img}" alt="${recProduct.title}"></div>
+                    <div class="rec-info"><h3>${recProduct.title}</h3><p class="rec-price">${recProduct.price}</p></div>
+                </a>`;
+        });
+    }
+</script>
+  <script src="js/theme.js"></script>
 </body>
 </html>
