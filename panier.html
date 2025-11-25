@@ -27,68 +27,127 @@
             </div>
 
         <div class="cart-total">
+            <div class="promo-section">
+                <input type="text" id="promo-code" class="promo-input" placeholder="Code Promo">
+                <button onclick="checkPromo()" class="promo-btn">APPLIQUER</button>
+            </div>
+            <p id="promo-msg" class="promo-message"></p>
+
             <div class="total-row"><span>SOUS-TOTAL</span><span id="subtotal">0.00 $</span></div>
-            <div class="total-row"><span>LIVRAISON</span><span>GRATUITE</span></div>
-            <hr>
-            <div class="total-row final"><span>TOTAL</span><span id="grand-total">0.00 $</span></div>
             
-            <a href="paiement.html" class="checkout-btn">PASSER AU PAIEMENT</a>
+            <div class="total-row" id="discount-row" style="display:none; color:#00ff00;">
+                <span>RABAIS (<span id="promo-name"></span>)</span>
+                <span id="discount-amount">-0.00 $</span>
+            </div>
+
+            <hr>
+            <div class="total-row final"><span>TOTAL (H.T.)</span><span id="grand-total">0.00 $</span></div>
+            
+            <button onclick="window.location.href='paiement.html'" class="checkout-btn">PASSER AU PAIEMENT</button>
         </div>
     </main>
 
     <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
 
     <script src="js/data.js"></script>
-<script src="js/cart.js"></script>
-<script>
-    const container = document.getElementById('cart-items-container');
-    let cart = JSON.parse(localStorage.getItem('productsInCart')) || {};
-    let totalAmount = 0;
+    <script src="js/cart.js"></script>
+    <script>
+        const container = document.getElementById('cart-items-container');
+        let cart = JSON.parse(localStorage.getItem('productsInCart')) || {};
+        let subTotal = 0;
 
-    if (Object.keys(cart).length === 0) {
-        container.innerHTML = "<p class='empty-msg'>Votre panier est vide.</p>";
-    } else {
-        // On boucle sur les clés du panier (ex: "chemise1-L", "polo2-M")
-        Object.keys(cart).forEach(uniqueKey => {
-            
-            // ON DÉCOUPE LA CLÉ : ID à gauche, Taille à droite
-            // split('-') coupe la chaine là où il y a le tiret
-            let splitKey = uniqueKey.split('-');
-            let productId = splitKey[0]; // ex: chemise1
-            let size = splitKey[1];      // ex: L
+        // 1. LISTE DES CODES PROMOS
+        const PROMO_CODES = {
+            "FTM": 0.15,
+            "PA": 0.10,
+            "ELA": 0.07,
+            "MUS": 0.05,
+            "GLO": 0.50
+        };
 
-            let product = productsDB[productId];
-            
-            if(product) {
-                let quantity = cart[uniqueKey];
-                let unitPrice = getPrice(product.price);
-                let linePrice = unitPrice * quantity;
-                totalAmount += linePrice;
+        // AFFICHER LE PANIER
+        if (Object.keys(cart).length === 0) {
+            container.innerHTML = "<p class='empty-msg'>Votre panier est vide.</p>";
+        } else {
+            Object.keys(cart).forEach(uniqueKey => {
+                let splitKey = uniqueKey.split('-');
+                let product = productsDB[splitKey[0]];
+                if(product) {
+                    let quantity = cart[uniqueKey];
+                    let linePrice = getPrice(product.price) * quantity;
+                    subTotal += linePrice;
 
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <div class="item-img"><img src="${product.img}" alt="${product.title}"></div>
-                        <div class="item-details">
-                            <h3>${product.title}</h3>
-                            <p class="unit-price">${product.price}</p>
-                            <p style="color:#aaa; font-size:0.9rem;">Taille : <strong style="color:white;">${size}</strong></p>
-                            
-                            <div class="qty-control"><span>Quantité : <strong>${quantity}</strong></span></div>
-                        </div>
-                        <div class="item-actions">
-                            <div class="item-total">${linePrice.toFixed(2)} $</div>
-                            <div class="delete-btn" onclick="deleteItem('${uniqueKey}')">
-                                <i class="fa-solid fa-trash"></i> Supprimer
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="item-img"><img src="${product.img}"></div>
+                            <div class="item-details">
+                                <h3>${product.title}</h3>
+                                <p class="unit-price">${product.price}</p>
+                                <p style="color:#aaa; font-size:0.9rem;">Taille : <strong style="color:white;">${splitKey[1]}</strong></p>
+                                <div class="qty-control"><span>Quantité : <strong>${quantity}</strong></span></div>
+                            </div>
+                            <div class="item-actions">
+                                <div class="item-total">${linePrice.toFixed(2)} $</div>
+                                <div class="delete-btn" onclick="deleteItem('${uniqueKey}')"><i class="fa-solid fa-trash"></i> Supprimer</div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                }
+            });
+        }
+
+        // GESTION DU RABAIS
+        let currentDiscount = 0;
+        let savedPromo = getActivePromo(); // Récupère du localStorage s'il y en a un
+
+        if (savedPromo) {
+            document.getElementById('promo-code').value = savedPromo.code;
+            applyDiscountDisplay(savedPromo.discount, savedPromo.code);
+        } else {
+            updateTotalsDisplay();
+        }
+
+        function checkPromo() {
+            let code = document.getElementById('promo-code').value.toUpperCase().trim();
+            let msg = document.getElementById('promo-msg');
+
+            if (PROMO_CODES[code]) {
+                msg.innerText = "Code appliqué : " + (PROMO_CODES[code] * 100) + "% de rabais !";
+                msg.className = "promo-message text-success";
+                
+                // Sauvegarde dans le localStorage
+                applyPromoToStorage(PROMO_CODES[code], code);
+                
+                // Mise à jour affichage
+                applyDiscountDisplay(PROMO_CODES[code], code);
+            } else {
+                msg.innerText = "Code invalide.";
+                msg.className = "promo-message text-error";
+                
+                // Annuler le rabais
+                localStorage.removeItem('activePromo');
+                currentDiscount = 0;
+                document.getElementById('discount-row').style.display = "none";
+                updateTotalsDisplay();
             }
-        });
-    }
-    document.getElementById('subtotal').innerText = totalAmount.toFixed(2) + " $";
-    document.getElementById('grand-total').innerText = totalAmount.toFixed(2) + " $";
-</script>
+        }
+
+        function applyDiscountDisplay(percentage, codeName) {
+            currentDiscount = percentage;
+            document.getElementById('discount-row').style.display = "flex";
+            document.getElementById('promo-name').innerText = codeName;
+            updateTotalsDisplay();
+        }
+
+        function updateTotalsDisplay() {
+            let discountAmount = subTotal * currentDiscount;
+            let finalTotal = subTotal - discountAmount;
+
+            document.getElementById('subtotal').innerText = subTotal.toFixed(2) + " $";
+            document.getElementById('discount-amount').innerText = "-" + discountAmount.toFixed(2) + " $";
+            document.getElementById('grand-total').innerText = finalTotal.toFixed(2) + " $";
+        }
+    </script>
     <script src="js/theme.js"></script>
 </body>
 </html>

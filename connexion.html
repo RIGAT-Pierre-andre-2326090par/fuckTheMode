@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion / Inscription</title>
     <link rel="stylesheet" href="style/pages.css">
+    <link rel="stylesheet" href="style/theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -21,9 +22,10 @@
                     <label>Email</label>
                     <input type="email" id="login-email" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group password-container">
                     <label>Mot de passe</label>
                     <input type="password" id="login-pass" required>
+                    <i class="fa-regular fa-eye toggle-password" onclick="togglePasswordVisibility('login-pass', this)"></i>
                 </div>
                 <button type="submit" class="btn-submit">SE CONNECTER</button>
             </form>
@@ -43,9 +45,10 @@
                     <label>Email</label>
                     <input type="email" id="reg-email" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group password-container">
                     <label>Mot de passe</label>
                     <input type="password" id="reg-pass" required>
+                    <i class="fa-regular fa-eye toggle-password" onclick="togglePasswordVisibility('reg-pass', this)"></i>
                 </div>
                 <button type="submit" class="btn-submit">CRÉER MON COMPTE</button>
             </form>
@@ -57,38 +60,26 @@
     </main>
 
     <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script> <script src="js/theme.js"></script>
     <script>
         function toggleForm() {
             let login = document.getElementById('login-box');
             let reg = document.getElementById('register-box');
-            if (login.style.display === 'none') {
-                login.style.display = 'block';
-                reg.style.display = 'none';
-            } else {
-                login.style.display = 'none';
-                reg.style.display = 'block';
-            }
+            if (login.style.display === 'none') { login.style.display = 'block'; reg.style.display = 'none'; } 
+            else { login.style.display = 'none'; reg.style.display = 'block'; }
         }
-
         function handleRegister(e) {
             e.preventDefault();
             let name = document.getElementById('reg-name').value;
             let email = document.getElementById('reg-email').value;
             let pass = document.getElementById('reg-pass').value;
-            
-            if(registerUser(name, email, pass)) {
-                toggleForm(); // Bascule vers connexion
-            }
+            if(registerUser(name, email, pass)) { toggleForm(); }
         }
-
         function handleLogin(e) {
             e.preventDefault();
             let email = document.getElementById('login-email').value;
             let pass = document.getElementById('login-pass').value;
-            
-            if(loginUser(email, pass)) {
-                window.location.href = "compte.html"; // Redirection vers le compte
-            }
+            if(loginUser(email, pass)) { window.location.href = "compte.html"; }
         }
     </script>
 </body>

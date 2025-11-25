@@ -37,3 +37,28 @@ function getPrice(priceString) {
 }
 
 updateCartIcon();
+// GESTION DU CODE PROMO
+function applyPromoToStorage(discountPercent, codeName) {
+    localStorage.setItem('activePromo', JSON.stringify({
+        code: codeName,
+        discount: discountPercent
+    }));
+}
+
+function getActivePromo() {
+    return JSON.parse(localStorage.getItem('activePromo'));
+}
+
+// Fonction pour masquer/afficher le mot de passe
+function togglePasswordVisibility(inputId, iconElement) {
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+        input.type = "text";
+        iconElement.classList.remove('fa-eye');
+        iconElement.classList.add('fa-eye-slash');
+    } else {
+        input.type = "password";
+        iconElement.classList.remove('fa-eye-slash');
+        iconElement.classList.add('fa-eye');
+    }
+}

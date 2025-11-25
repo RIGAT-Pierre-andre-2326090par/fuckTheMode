@@ -62,3 +62,58 @@ input:checked + .slider:before { transform: translateX(26px); }
     .fav-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .fav-card img { height: 150px; }
 }
+/* --- CODE PROMO (PANIER) --- */
+.promo-section {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.promo-input {
+    flex: 1;
+    padding: 10px;
+    background: #000;
+    border: 1px solid #333;
+    color: white;
+    text-transform: uppercase;
+}
+.promo-btn {
+    padding: 10px 20px;
+    background: #333;
+    color: white;
+    border: 1px solid #333;
+    cursor: pointer;
+    font-weight: bold;
+}
+.promo-btn:hover {
+    background: #00BFFF;
+    color: black;
+}
+.promo-message {
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+.text-success { color: #00ff00; }
+.text-error { color: #ff0000; }
+
+/* --- LIGNES DE TAXES (PAIEMENT) --- */
+.tax-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 5px;
+}
+
+/* --- VISIBILITÉ MOT DE PASSE --- */
+.password-container {
+    position: relative;
+}
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #00BFFF;
+}

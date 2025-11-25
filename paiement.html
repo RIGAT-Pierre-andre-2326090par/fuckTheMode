@@ -17,9 +17,22 @@
         <section class="cart-summary">
             <h2 class="section-title">Récapitulatif</h2>
             <div class="cart-grid" id="checkout-items"></div>
-            <div class="total-line"><span>TOTAL À PAYER :</span><span class="total-price" id="checkout-total">0.00 $</span></div>
+            
+            <hr class="separator">
+            
+            <div class="tax-row"><span>Sous-total</span><span id="summary-subtotal">0.00 $</span></div>
+            <div class="tax-row" id="summary-discount-row" style="display:none; color:#00ff00;"><span>Rabais</span><span id="summary-discount">-0.00 $</span></div>
+            <div class="tax-row"><span>TPS (5%)</span><span id="summary-tps">0.00 $</span></div>
+            <div class="tax-row"><span>TVQ (9.975%)</span><span id="summary-tvq">0.00 $</span></div>
+            
+            <div class="total-line">
+                <span>TOTAL À PAYER :</span>
+                <span class="total-price" id="checkout-total">0.00 $</span>
+            </div>
         </section>
+
         <hr class="separator">
+
         <section class="checkout-form">
             <h2 class="section-title">Paiement</h2>
             <form onsubmit="finishOrder(event)">
@@ -31,7 +44,7 @@
             </form>
         </section>
     </main>
-    <footer>&copy; 2025 FUCK THE MODE.</footer>
+
     <script src="js/data.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/auth.js"></script>
@@ -39,36 +52,76 @@
     <script>
         const container = document.getElementById('checkout-items');
         let cart = JSON.parse(localStorage.getItem('productsInCart')) || {};
-        let totalAmount = 0;
+        
+        // CALCULS FINANCIERS
+        let subTotal = 0;
+        let discountPercent = 0;
+        
+        // Récupérer le rabais du localStorage
+        let activePromo = getActivePromo();
+        if (activePromo) {
+            discountPercent = activePromo.discount;
+        }
+
         if (Object.keys(cart).length === 0) {
             container.innerHTML = "<p>Votre panier est vide.</p>";
-            const btn = document.querySelector('.pay-btn');
-            if(btn) { btn.disabled = true; btn.style.background = "#333"; btn.style.cursor = "not-allowed"; }
+            document.querySelector('.pay-btn').disabled = true;
         } else {
             Object.keys(cart).forEach(uniqueKey => {
                 let splitKey = uniqueKey.split('-');
-                let productId = splitKey[0];
-                let size = splitKey[1] || 'Unique';
-                let product = productsDB[productId];
+                let product = productsDB[splitKey[0]];
                 if(product){
                     let quantity = cart[uniqueKey];
                     let linePrice = getPrice(product.price) * quantity;
-                    totalAmount += linePrice;
-                    container.innerHTML += `<div class="cart-item"><div class="img-box"><img src="${product.img}" alt="${product.title}"></div><div class="item-info"><div><h3>${product.title} (x${quantity})</h3><p style="font-size:0.8rem; color:#aaa;">Taille : ${size}</p></div><p class="price">${linePrice.toFixed(2)} $</p></div></div>`;
+                    subTotal += linePrice;
+
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="img-box"><img src="${product.img}"></div>
+                            <div class="item-info">
+                                <div><h3>${product.title} (x${quantity})</h3><p style="font-size:0.8rem; color:#aaa;">Taille : ${splitKey[1]}</p></div>
+                                <p class="price">${linePrice.toFixed(2)} $</p>
+                            </div>
+                        </div>
+                    `;
                 }
             });
-            document.getElementById('checkout-total').innerText = totalAmount.toFixed(2) + " $";
+
+            // CALCULS TAXES QUEBEC
+            let discountAmount = subTotal * discountPercent;
+            let priceAfterDiscount = subTotal - discountAmount;
+            
+            let tps = priceAfterDiscount * 0.05;
+            let tvq = priceAfterDiscount * 0.09975;
+            let finalTotal = priceAfterDiscount + tps + tvq;
+
+            // AFFICHAGE
+            document.getElementById('summary-subtotal').innerText = subTotal.toFixed(2) + " $";
+            
+            if (discountAmount > 0) {
+                document.getElementById('summary-discount-row').style.display = "flex";
+                document.getElementById('summary-discount').innerText = "-" + discountAmount.toFixed(2) + " $";
+            }
+
+            document.getElementById('summary-tps').innerText = tps.toFixed(2) + " $";
+            document.getElementById('summary-tvq').innerText = tvq.toFixed(2) + " $";
+            document.getElementById('checkout-total').innerText = finalTotal.toFixed(2) + " $";
         }
 
         function finishOrder(e) {
             e.preventDefault();
             let currentUser = localStorage.getItem('currentUser');
-            if (!currentUser) { alert("Veuillez vous connecter !"); window.location.href = "connexion.html"; return; }
-            let finalItemsCount = 0;
-            Object.values(cart).forEach(qty => finalItemsCount += qty);
-            addOrderToHistory(totalAmount.toFixed(2) + " $", finalItemsCount);
+            if (!currentUser) { alert("Connectez-vous !"); window.location.href = "connexion.html"; return; }
+            
+            // On recalcule le total exact pour l'historique
+            let finalTotalText = document.getElementById('checkout-total').innerText;
+            let itemsCount = 0;
+            Object.values(cart).forEach(qty => itemsCount += qty);
+
+            addOrderToHistory(finalTotalText, itemsCount);
             alert("Paiement validé !");
             clearCart();
+            localStorage.removeItem('activePromo'); // On vide le code promo après usage
             window.location.href = "compte.html";
         }
     </script>
