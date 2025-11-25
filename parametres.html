@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramètres</title>
     <link rel="stylesheet" href="style/pages.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -33,12 +33,10 @@
 
         <div class="settings-group">
             <h3 style="margin-bottom:15px; color:#aaa;">NOTIFICATIONS</h3>
-            
             <div class="setting-item">
                 <span>Recevoir les promos par Email</span>
                 <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
             </div>
-            
             <div class="setting-item">
                 <span>Notification de commande</span>
                 <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
@@ -53,42 +51,91 @@
                 <label class="switch"><input type="checkbox"><span class="slider"></span></label>
             </div>
 
-            <div class="setting-item">
+            <div class="setting-item" onclick="openModal()" style="cursor:pointer;">
                 <span>Changer de mot de passe</span>
                 <i class="fa-solid fa-chevron-right" style="color:#666;"></i>
             </div>
         </div>
 
         <div class="settings-group">
-    <h3 style="margin-bottom:15px; color:#aaa;">APPARENCE</h3>
-    <div class="setting-item">
-        <span>Mode Clair</span>
-        <label class="switch">
-            <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
-            <span class="slider"></span>
-        </label>
-    </div>
-</div>
+            <h3 style="margin-bottom:15px; color:#aaa;">APPARENCE</h3>
+            <div class="setting-item">
+                <span>Mode Clair</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
 
-<script src="js/theme.js"></script>
-<script>
-    // Petit script pour que le bouton soit dans la bonne position au chargement
-    document.addEventListener("DOMContentLoaded", () => {
-        const theme = localStorage.getItem('siteTheme');
-        const toggle = document.getElementById('theme-toggle');
-        // Si le thème est 'light', on coche la case
-        if (theme === 'light') {
-            toggle.checked = true;
-        } else {
-            toggle.checked = false;
-        }
-    });
-</script>
     </main>
+
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 style="color:#00BFFF; margin-bottom:20px; text-transform:uppercase;">Changer le mot de passe</h2>
+            
+            <form onsubmit="handlePassChange(event)">
+                <div class="form-group" style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; color:#aaa;">Ancien mot de passe</label>
+                    <input type="password" id="old-pass" required style="width:100%; padding:10px; background:#000; border:1px solid #333; color:white;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom:20px;">
+                    <label style="display:block; margin-bottom:5px; color:#aaa;">Nouveau mot de passe</label>
+                    <input type="password" id="new-pass" required style="width:100%; padding:10px; background:#000; border:1px solid #333; color:white;">
+                </div>
+
+                <button type="submit" class="btn-submit" style="width:100%; padding:10px; font-size:1rem;">VALIDER</button>
+            </form>
+        </div>
+    </div>
 
     <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
 
     <script src="js/favorites.js"></script>
     <script src="js/cart.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        // GESTION DU BOUTON THÈME
+        document.addEventListener("DOMContentLoaded", () => {
+            const theme = localStorage.getItem('siteTheme');
+            const toggle = document.getElementById('theme-toggle');
+            if (theme === 'light') { toggle.checked = true; } else { toggle.checked = false; }
+        });
+
+        // GESTION DU MODAL
+        function openModal() {
+            document.getElementById('password-modal').style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById('password-modal').style.display = "none";
+        }
+
+        // Fermer si on clique en dehors de la fenêtre
+        window.onclick = function(event) {
+            let modal = document.getElementById('password-modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // GESTION DU CHANGEMENT DE MOT DE PASSE
+        function handlePassChange(e) {
+            e.preventDefault();
+            let oldP = document.getElementById('old-pass').value;
+            let newP = document.getElementById('new-pass').value;
+
+            // Appel de la fonction dans auth.js
+            if (changePassword(oldP, newP)) {
+                closeModal(); // On ferme le modal si ça a marché
+                document.getElementById('old-pass').value = ""; // On vide les champs
+                document.getElementById('new-pass').value = "";
+            }
+        }
+    </script>
 </body>
 </html>
