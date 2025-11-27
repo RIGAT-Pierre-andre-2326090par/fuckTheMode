@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Favoris</title>
+    <link rel="stylesheet" href="style/pages.css">
+    <link rel="stylesheet" href="style/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Accueil</a>
+        <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
+        <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
+        <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
+        <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+    </div>
+    <header class="site-header">
+        <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo">FUCK THE MODE</div>
+        <div class="cart-icon-container" onclick="window.location.href='panier.html'">
+            <i class="fa-solid fa-basket-shopping"></i><span id="cart-count">0</span>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <h1>Mes coups de cœur</h1>
+        <div id="fav-grid" class="fav-grid"></div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        const container = document.getElementById('fav-grid');
+        let favorites = JSON.parse(localStorage.getItem('myFavorites')) || [];
+
+        if (favorites.length === 0) {
+            container.innerHTML = "<p class='empty-msg'>Vous n'avez aucun favori pour le moment.</p>";
+        } else {
+            favorites.forEach(id => {
+                let product = productsDB[id];
+                if (product) {
+                    container.innerHTML += `
+                        <div class="fav-card">
+                            <button class="remove-fav" onclick="removeFav(event, '${id}')"><i class="fa-solid fa-trash"></i></button>
+                            <a href="produit.html?id=${id}" style="text-decoration:none; color:inherit;">
+                                <img src="${product.img}" alt="${product.title}">
+                                <div class="fav-info"><h3 class="fav-title">${product.title}</h3><p class="fav-price">${product.price}</p></div>
+                            </a>
+                        </div>`;
+                }
+            });
+        }
+        function removeFav(event, id) {
+            event.preventDefault();
+            event.stopPropagation();
+            let favs = JSON.parse(localStorage.getItem('myFavorites')) || [];
+            favs = favs.filter(favId => favId !== id);
+            localStorage.setItem('myFavorites', JSON.stringify(favs));
+            location.reload();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement Sécurisé</title>
+    <link rel="stylesheet" href="style/paiement.css">
+    <link rel="stylesheet" href="style/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo">FUCK THE MODE</div>
+        <nav class="site-nav"><a href="panier.html"><i class="fa-solid fa-arrow-left"></i> Retour au panier</a></nav>
+    </header>
+    <main class="checkout-container">
+        <section class="cart-summary">
+            <h2 class="section-title">Récapitulatif</h2>
+            <div class="cart-grid" id="checkout-items"></div>
+            <div class="total-line"><span>TOTAL À PAYER :</span><span class="total-price" id="checkout-total">0.00 $</span></div>
+        </section>
+        <hr class="separator">
+        <section class="checkout-form">
+            <h2 class="section-title">Paiement</h2>
+            <form onsubmit="finishOrder(event)">
+                <div class="form-group"><label>Nom complet</label><input type="text" required></div>
+                <div class="form-group"><label>Email</label><input type="email" required></div>
+                <div class="form-group"><label>Carte Bancaire</label><div class="input-icon"><i class="fa-solid fa-credit-card"></i><input type="text" placeholder="0000 0000 0000 0000" required></div></div>
+                <div class="row"><div class="form-group half"><label>Expiration</label><input type="text" placeholder="MM/AA" required></div><div class="form-group half"><label>CVC</label><input type="text" placeholder="123" required></div></div>
+                <button type="submit" class="pay-btn">PAYER MAINTENANT</button>
+            </form>
+        </section>
+    </main>
+    <footer>&copy; 2025 FUCK THE MODE.</footer>
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        const container = document.getElementById('checkout-items');
+        let cart = JSON.parse(localStorage.getItem('productsInCart')) || {};
+        let totalAmount = 0;
+        if (Object.keys(cart).length === 0) {
+            container.innerHTML = "<p>Votre panier est vide.</p>";
+            const btn = document.querySelector('.pay-btn');
+            if(btn) { btn.disabled = true; btn.style.background = "#333"; btn.style.cursor = "not-allowed"; }
+        } else {
+            Object.keys(cart).forEach(uniqueKey => {
+                let splitKey = uniqueKey.split('-');
+                let productId = splitKey[0];
+                let size = splitKey[1] || 'Unique';
+                let product = productsDB[productId];
+                if(product){
+                    let quantity = cart[uniqueKey];
+                    let linePrice = getPrice(product.price) * quantity;
+                    totalAmount += linePrice;
+                    container.innerHTML += `<div class="cart-item"><div class="img-box"><img src="${product.img}" alt="${product.title}"></div><div class="item-info"><div><h3>${product.title} (x${quantity})</h3><p style="font-size:0.8rem; color:#aaa;">Taille : ${size}</p></div><p class="price">${linePrice.toFixed(2)} $</p></div></div>`;
+                }
+            });
+            document.getElementById('checkout-total').innerText = totalAmount.toFixed(2) + " $";
+        }
+
+        function finishOrder(e) {
+            e.preventDefault();
+            let currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) { alert("Veuillez vous connecter !"); window.location.href = "connexion.html"; return; }
+            let finalItemsCount = 0;
+            Object.values(cart).forEach(qty => finalItemsCount += qty);
+            addOrderToHistory(totalAmount.toFixed(2) + " $", finalItemsCount);
+            alert("Paiement validé !");
+            clearCart();
+            window.location.href = "compte.html";
+        }
+    </script>
+</body>
+</html>
