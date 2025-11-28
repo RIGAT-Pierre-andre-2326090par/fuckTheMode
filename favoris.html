@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Favoris</title>
-    <link href="../style/pages.css" rel="stylesheet">
-    <link href="../style/theme.css" rel="stylesheet">
+    <link href="style/pages.css" rel="stylesheet">
+    <link href="style/theme.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="../index.html"><i class="fa-solid fa-house"></i> Accueil</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Accueil</a>
         <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
         <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
         <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
@@ -19,7 +19,7 @@
     </div>
     <header class="site-header">
         <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
-        <a class="logo" href="../index.html">FUCK THE MODE</a>
+        <a class="logo" href="index.html">FUCK THE MODE</a>
         <div class="cart-icon-container" onclick="window.location.href='panier.html'">
             <i class="fa-solid fa-basket-shopping"></i><span id="cart-count">0</span>
         </div>
@@ -30,10 +30,10 @@
         <div id="fav-grid" class="fav-grid"></div>
     </main>
 
-    <script src="../js/data.js"></script>
-    <script src="../js/favorites.js"></script>
-    <script src="../js/cart.js"></script>
-    <script src="../js/theme.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/theme.js"></script>
     <script>
         const container = document.getElementById('fav-grid');
         let favorites = JSON.parse(localStorage.getItem('myFavorites')) || [];
