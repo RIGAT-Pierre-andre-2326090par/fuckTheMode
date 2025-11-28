@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import {createClient} from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://jmufrhdkzybqpaulnomj.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptdWZyaGRrenlicXBhdWxub21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjcwNTIsImV4cCI6MjA3OTUwMzA1Mn0.V5gkeKtaf8T0nUCCs7TQbBdAbHUGMWEb7C5UNReq7Mw';
@@ -164,3 +164,9 @@ function updateStock(id, productID, colorID, sizeID, newQuantity) {
 }
 
 export { updateStock };
+
+function searchProductsByName(name) {
+    return supabase.from('products').select('id').ilike('Nom', `%${name}%`).or('Description::text.ilike.%' + name + '%');
+}
+
+export {searchProductsByName};
