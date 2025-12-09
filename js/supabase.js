@@ -1,172 +1,342 @@
-import {createClient} from '@supabase/supabase-js';
-
 const supabaseUrl = 'https://jmufrhdkzybqpaulnomj.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptdWZyaGRrenlicXBhdWxub21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjcwNTIsImV4cCI6MjA3OTUwMzA1Mn0.V5gkeKtaf8T0nUCCs7TQbBdAbHUGMWEb7C5UNReq7Mw';
-export const supabase = createClient(supabaseUrl, supabaseKey);
+const supabaseKey = 'sb_publishable_klXk-f2VdhcOhGp-arJBwg_BoXE7i-c';
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 function getAllTypes() {
-  return supabase.from('types').select('*');
-}
+    const {data, error} = supabase.from('types').select('*');
 
-export { getAllTypes };
+    if (error) {
+        console.error('Error fetching types:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getAllProducts() {
-  return supabase.from('products').select('id, Nom, Prix');
-}
+    const {
+        data,
+        error
+    } = supabase.from('stock').select('product(id, Nom, Prix, Description), size(type(id))').order('product(id)', {ascending: true});
 
-export { getAllProducts };
+    if (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getAllProductsById(typeID) {
-  return supabase.from('products').select('id, Nom, Prix, size(type)').eq('type', typeID);
-}
+    const {data, error} = supabase.from('product').select('id, Nom, Prix, size(type)').eq('type', typeID);
 
-export { getAllProductsById };
+    if (error) {
+        console.error('Error fetching products by type ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getProductById(productID) {
-  return supabase.from('products').select('*').eq('id', productID).single();
-}
+    const {data, error} = supabase.from('product').select('*').eq('id', productID).single();
 
-export { getProductById };
+    if (error) {
+        console.error('Error fetching product by ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getSizesByProductId(productID) {
-  return supabase.from('sizes').select('size').eq('product_id', productID);
-}
+    const {data, error} = supabase.from('sizes').select('size').eq('product_id', productID);
 
-export { getSizesByProductId };
+    if (error) {
+        console.error('Error fetching sizes by product ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getUserById(userID) {
-    return supabase.from('users').select('email, mot_de_passe').eq('id', userID).single();
-}
+    const {data, error} = supabase.from('users').select('email, mot_de_passe').eq('id', userID).single();
 
-export { getUserById };
+    if (error) {
+        console.error('Error fetching user by ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getDetailledUserById(userID) {
-    return supabase.from('users').select('*').eq('id', userID).single();
-}
+    const {data, error} = supabase.from('users').select('*').eq('id', userID).single();
 
-export { getDetailledUserById };
+    if (error) {
+        console.error('Error fetching detailed user by ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getOrdersByUserId(userID) {
-    return supabase.from('commande').select('id').eq('user', userID);
-}
+    const {data, error} = supabase.from('commande').select('id').eq('user', userID);
 
-export { getOrdersByUserId };
+    if (error) {
+        console.error('Error fetching orders by user ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getOrderDetailsByOrderId(orderID) {
-    return supabase.from('commande_content').select('*, stock(product(Nom), color( quantity)').eq('commande', orderID);
-}
+    const {
+        data,
+        error
+    } = supabase.from('commande_content').select('*, stock(product(Nom), color( quantity)').eq('commande', orderID);
 
-export { getOrderDetailsByOrderId };
+    if (error) {
+        console.error('Error fetching order details by order ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getStockByProductId(productID) {
-    return supabase.from('stock').select('*').eq('product', productID);
-}
+    const {data, error} = supabase.from('stock').select('*').eq('product', productID);
 
-export { getStockByProductId };
+    if (error) {
+        console.error('Error fetching stock by product ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getColorAndSizeById(productID) {
-    return supabase.from('stock').select('color(color), size(size)').eq('product', productID);
-}
+    const {data, error} = supabase.from('stock').select('color(color), size(size)').eq('product', productID);
 
-export { getColorAndSizeById };
+    if (error) {
+        console.error('Error fetching color and size by product ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getFavoritesByUserId(userID) {
-    return supabase.from('favorites').select('product').eq('user', userID);
-}
+    const {data, error} = supabase.from('favorites').select('product').eq('user', userID);
 
-export { getFavoritesByUserId };
+    if (error) {
+        console.error('Error fetching favorites by user ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function getFavoriteProductsByUserId(userID) {
-    return supabase.from('favorites').select('product(Nom, Prix)').eq('user', userID);
-}
+    const {data, error} = supabase.from('favorites').select('product(Nom, Prix)').eq('user', userID);
 
-export { getFavoriteProductsByUserId };
+    if (error) {
+        console.error('Error fetching favorite products by user ID:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addUser(email, mot_de_passe) {
-    return supabase.from('users').insert([{ email: email, mot_de_passe: mot_de_passe }]);
-}
+    const {data, error} = supabase.from('users').insert([{email: email, mot_de_passe: mot_de_passe}]);
 
-export { addUser };
+    if (error) {
+        console.error('Error adding user:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addFavorite(userID, productID) {
-    return supabase.from('favorites').insert([{ user: userID, product: productID }]);
-}
+    const {data, error} = supabase.from('favorites').insert([{user: userID, product: productID}]);
 
-export { addFavorite };
+    if (error) {
+        console.error('Error adding favorite:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addColor(colorName, color) {
-    return supabase.from('colors').insert([{ name: colorName, color: color }]);
-}
+    const {data, error} = supabase.from('colors').insert([{name: colorName, color: color}]);
 
-export { addColor };
+    if (error) {
+        console.error('Error adding color:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addType(typeName) {
-    return supabase.from('types').insert([{ type: typeName }]);
-}
+    const {data, error} = supabase.from('types').insert([{type: typeName}]);
 
-export { addType };
+    if (error) {
+        console.error('Error adding type:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addSize(size, type) {
-    return supabase.from('sizes').insert([{ size: size, type: type }]);
-}
+    const {data, error} = supabase.from('sizes').insert([{size: size, type: type}]);
 
-export { addSize };
+    if (error) {
+        console.error('Error adding size:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addProduct(Nom, Prix, type) {
-    return supabase.from('products').insert([{ Nom: Nom, Prix: Prix, type: type }]);
-}
+    const {data, error} = supabase.from('product').insert([{Nom: Nom, Prix: Prix, type: type}]);
 
-export { addProduct };
+    if (error) {
+        console.error('Error adding product:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addStockEmpty(product, color, size) {
-    return supabase.from('stock').insert([{ product: product, color: color, size: size}]);
-}
+    const {data, error} = supabase.from('stock').insert([{product: product, color: color, size: size}]);
 
-export { addStockEmpty };
+    if (error) {
+        console.error('Error adding empty stock:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addStock(product, color, size, quantity) {
-    return supabase.from('stock').insert([{ product: product, color: color, size: size, quantity: quantity}]);
-}
+    const {data, error} = supabase.from('stock').insert([{
+        product: product,
+        color: color,
+        size: size,
+        quantity: quantity
+    }]);
 
-export { addStock };
+    if (error) {
+        console.error('Error adding stock:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addOrder(user) {
-    return supabase.from('commande').insert([{ user: user }]);
-}
+    const {data, error} = supabase.from('commande').insert([{user: user}]);
 
-export { addOrder };
+    if (error) {
+        console.error('Error adding order:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function addOrderContent(commande, stock, quantity) {
-    return supabase.from('commande_content').insert([{ commande: commande, stock: stock, quantity: quantity }]);
+    const {data, error} = supabase.from('commande_content').insert([{
+        commande: commande,
+        stock: stock,
+        quantity: quantity
+    }]);
+
+    if (error) {
+        console.error('Error adding order content:', error);
+        return [];
+    }
+
+    return data;
 }
-export { addOrderContent };
 
 function deleteFavorite(userID, productID) {
-    return supabase.from('favorites').delete().eq('user', userID).eq('product', productID);
-}
+    const {data, error} = supabase.from('favorites').delete().eq('user', userID).eq('product', productID);
 
-export { deleteFavorite };
+    if (error) {
+        console.error('Error deleting favorite:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function updateStockQuantity(productID, colorID, sizeID, newQuantity) {
-    return supabase.from('stock').update({ quantity: newQuantity }).eq('product', productID).eq('color', colorID).eq('size', sizeID);
-}
+    const {
+        data,
+        error
+    } = supabase.from('stock').update({quantity: newQuantity}).eq('product', productID).eq('color', colorID).eq('size', sizeID);
 
-export { updateStockQuantity };
+    if (error) {
+        console.error('Error updating stock quantity:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function updateUserDetails(userID, newEmail, newMotDePasse, newName, newAddress) {
-    return supabase.from('users').update({ email: newEmail, mot_de_passe: newMotDePasse, name: newName, address: newAddress }).eq('id', userID);
-}
+    const {data, error} = supabase.from('users').update({
+        email: newEmail,
+        mot_de_passe: newMotDePasse,
+        name: newName,
+        address: newAddress
+    }).eq('id', userID);
 
-export { updateUserDetails };
+    if (error) {
+        console.error('Error updating user details:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function updateStock(id, productID, colorID, sizeID, newQuantity) {
-    return supabase.from('stock').update({ product: productID, color: colorID, size: sizeID, quantity: newQuantity }).eq('id', id);
-}
+    const {data, error} = supabase.from('stock').update({
+        product: productID,
+        color: colorID,
+        size: sizeID,
+        quantity: newQuantity
+    }).eq('id', id);
 
-export { updateStock };
+    if (error) {
+        console.error('Error updating stock:', error);
+        return [];
+    }
+
+    return data;
+}
 
 function searchProductsByName(name) {
-    return supabase.from('products').select('id').ilike('Nom', `%${name}%`).or('Description::text.ilike.%' + name + '%');
-}
+    const {
+        data,
+        error
+    } = supabase.from('product').select('id').ilike('Nom', `%${name}%`).or('Description::text.ilike.%' + name + '%');
 
-export {searchProductsByName};
+    if (error) {
+        console.error('Error searching products by name:', error);
+        return [];
+    }
+
+    return data;
+}

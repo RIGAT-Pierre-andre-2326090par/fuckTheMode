@@ -46,9 +46,9 @@
         </nav>
     </header>
 
-    <main class="gallery">
+    <main id="gallery">
 
-        <a class="card-link" data-id="chemise1" href="pages/produit.html?id=chemise1">
+        <!--<a class="card-link" data-id="chemise1" href="pages/produit.html?id=chemise1">
             <div class="card chemise">
                 <i class="fa-regular fa-heart fav-btn" onclick="toggleFavorite(event, 'chemise1')"></i>
                 <img alt="Chemise 1" src="img/chemise1.jpg">
@@ -339,31 +339,84 @@
                 <img src="img/pantalon8.webp" alt="Pantalon 8"><div class="overlay"></div>
             </div>
             <div class="card-info"><h3 class="card-title"></h3><p class="card-price"></p></div>
-        </a>
+        </a>-->
 
     </main>
 
-    <script src="js/data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
+    <script src="js/supabase.js"></script>
     <script src="js/index.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/favorites.js"></script>
     <script src="js/theme.js"></script>
     
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let cards = document.querySelectorAll('.card-link');
-            cards.forEach(card => {
-                let id = card.getAttribute('data-id');
-                if (productsDB[id]) {
-                    card.querySelector('.card-title').innerText = productsDB[id].title;
-                    card.querySelector('.card-price').innerText = productsDB[id].price;
-                    
-                    // Colore le coeur si c'est un favori
-                    let btn = card.querySelector('.fav-btn');
-                    if(btn) checkFavoriteStatus(id, btn);
-                }
-            });
-        });
+        async function fetchAndDisplayProducts() {
+            let products = await getAllProducts();
+            if (products && products.data) products = products.data;
+            products = Array.isArray(products) ? products : [];
+
+            for (const product of products) {
+                let a = document.createElement('a');
+                a.classList.add('card-link');
+                a.setAttribute('data-id', product.id);
+                a.href = 'pages/produit.html?id=' + product.id;
+
+                let cardDiv = document.createElement('div');
+                cardDiv.classList.add('card', product.category);
+
+                let favIcon = document.createElement('i');
+                favIcon.classList.add('fa-regular', 'fa-heart', 'fav-btn');
+                favIcon.onclick = function (event) {
+                    toggleFavorite(event, product.id);
+                    checkFavoriteStatus(product.id, favIcon);
+                };
+
+                let img = document.createElement('img');
+                img.alt = product.title;
+                img.src = product.img;
+
+                let overlay = document.createElement('div');
+                overlay.classList.add('overlay');
+
+                cardDiv.appendChild(favIcon);
+                cardDiv.appendChild(img);
+                cardDiv.appendChild(overlay);
+
+                let infoDiv = document.createElement('div');
+                infoDiv.classList.add('card-info');
+
+                let titleH3 = document.createElement('h3');
+                titleH3.classList.add('card-title');
+
+                let priceP = document.createElement('p');
+                priceP.classList.add('card-price');
+
+                infoDiv.appendChild(titleH3);
+                infoDiv.appendChild(priceP);
+
+                a.appendChild(cardDiv);
+                a.appendChild(infoDiv);
+
+                document.getElementById('gallery').appendChild(a);
+            }
+
+        }
+
+        fetchAndDisplayProducts();
+
+        /*let cards = document.querySelectorAll('.card-link');
+        cards.forEach(card => {
+            let id = card.getAttribute('data-id');
+            if (productsDB[id]) {
+                card.querySelector('.card-title').innerText = productsDB[id].title;
+                card.querySelector('.card-price').innerText = productsDB[id].price;
+
+                // Colore le coeur si c'est un favori
+                let btn = card.querySelector('.fav-btn');
+                if(btn) checkFavoriteStatus(id, btn);
+            }
+        });*/
     </script>
 </body>
 </html>
