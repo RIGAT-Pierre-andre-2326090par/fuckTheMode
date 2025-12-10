@@ -2,98 +2,101 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Mon Compte</title>
     <link href="../style/pages.css" rel="stylesheet">
     <link href="../style/theme.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="../index.html"><i class="fa-solid fa-house"></i> Accueil</a>
-        <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
-        <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
-        <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
-        <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+<div class="sidebar" id="mySidebar">
+    <a class="closebtn" href="javascript:void(0)" onclick="closeNav()">&times;</a>
+    <a href="../index.html"><i class="fa-solid fa-house"></i> Accueil</a>
+    <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
+    <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
+    <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
+    <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+</div>
+
+<header class="site-header">
+    <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
+    <a class="logo" href="../index.html">FUCK THE MODE</a>
+    <div class="cart-icon-container" onclick="window.location.href='panier.html'">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span id="cart-count">0</span>
+    </div>
+</header>
+
+<main class="page-container">
+    <h1>Mon Profil</h1>
+
+    <div class="profile-header" id="profile-card" style="display:none;">
+
+        <div class="avatar" onclick="document.getElementById('file-upload').click()">
+            <img alt="Profil" class="profile-img-tag" id="real-profile-img" src="">
+            <i class="fa-solid fa-user default-icon" id="default-profile-icon"></i>
+        </div>
+
+        <input accept="image/*" id="file-upload" onchange="handleImageUpload(this)" style="display:none" type="file">
+
+        <div class="user-info">
+            <h2 id="user-name">Chargement...</h2>
+            <p id="user-email">...</p>
+            <p style="color:#00BFFF; font-size:0.9rem; margin-top:5px;">Membre vérifié</p>
+        </div>
     </div>
 
-    <header class="site-header">
-        <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
-        <a class="logo" href="../index.html">FUCK THE MODE</a>
-        <div class="cart-icon-container" onclick="window.location.href='panier.html'">
-            <i class="fa-solid fa-basket-shopping"></i>
-            <span id="cart-count">0</span>
-        </div>
-    </header>
+    <div id="login-warning" style="display:none; text-align:center; padding:50px;">
+        <p>Vous n'êtes pas connecté.</p>
+        <a class="btn-submit" href="connexion.html"
+           style="display:inline-block; margin-top:20px; text-decoration:none;">SE CONNECTER</a>
+    </div>
 
-    <main class="page-container">
-        <h1>Mon Profil</h1>
+    <div class="order-history" id="order-section" style="display:none;">
+        <h2>Mes commandes</h2>
+        <div id="orders-container"></div>
+    </div>
 
-        <div class="profile-header" id="profile-card" style="display:none;">
-            
-            <div class="avatar" onclick="document.getElementById('file-upload').click()">
-                <img id="real-profile-img" class="profile-img-tag" src="" alt="Profil">
-                <i id="default-profile-icon" class="fa-solid fa-user default-icon"></i>
-            </div>
-            
-            <input type="file" id="file-upload" accept="image/*" style="display:none" onchange="handleImageUpload(this)">
+    <button class="btn-submit" id="logout-btn" onclick="logoutUser()"
+            style="background:#333; color:white; margin-top:20px; width:100%; display:none;">Déconnexion
+    </button>
+</main>
 
-            <div class="user-info">
-                <h2 id="user-name">Chargement...</h2>
-                <p id="user-email">...</p>
-                <p style="color:#00BFFF; font-size:0.9rem; margin-top:5px;">Membre vérifié</p>
-            </div>
-        </div>
+<footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
 
-        <div id="login-warning" style="display:none; text-align:center; padding:50px;">
-            <p>Vous n'êtes pas connecté.</p>
-            <a href="connexion.html" class="btn-submit" style="display:inline-block; margin-top:20px; text-decoration:none;">SE CONNECTER</a>
-        </div>
+<script src="../js/favorites.js"></script>
+<script src="../js/cart.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/theme.js"></script>
 
-        <div class="order-history" id="order-section" style="display:none;">
-            <h2>Mes commandes</h2>
-            <div id="orders-container"></div>
-        </div>
+<script>
+    // 1. VÉRIFICATION DE L'UTILISATEUR
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        <button id="logout-btn" onclick="logoutUser()" class="btn-submit" style="background:#333; color:white; margin-top:20px; width:100%; display:none;">Déconnexion</button>
-    </main>
+    if (currentUser) {
+        document.getElementById('profile-card').style.display = 'flex';
+        document.getElementById('order-section').style.display = 'block';
+        document.getElementById('logout-btn').style.display = 'block';
 
-    <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+        document.getElementById('user-name').innerText = currentUser.name;
+        document.getElementById('user-email').innerText = currentUser.email;
 
-    <script src="../js/favorites.js"></script>
-    <script src="../js/cart.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/theme.js"></script>
+        // 2. GESTION DE LA PHOTO DE PROFIL
+        if (currentUser.profilePic) {
+            // Si une photo existe, on l'affiche et on cache l'icône par défaut
+            document.getElementById('real-profile-img').src = currentUser.profilePic;
+            document.getElementById('real-profile-img').style.display = 'block';
+            document.getElementById('default-profile-icon').style.display = 'none';
+        }
 
-    <script>
-        // 1. VÉRIFICATION DE L'UTILISATEUR
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-        if (currentUser) {
-            document.getElementById('profile-card').style.display = 'flex';
-            document.getElementById('order-section').style.display = 'block';
-            document.getElementById('logout-btn').style.display = 'block';
-            
-            document.getElementById('user-name').innerText = currentUser.name;
-            document.getElementById('user-email').innerText = currentUser.email;
-
-            // 2. GESTION DE LA PHOTO DE PROFIL
-            if (currentUser.profilePic) {
-                // Si une photo existe, on l'affiche et on cache l'icône par défaut
-                document.getElementById('real-profile-img').src = currentUser.profilePic;
-                document.getElementById('real-profile-img').style.display = 'block';
-                document.getElementById('default-profile-icon').style.display = 'none';
-            }
-
-            // 3. AFFICHAGE DES COMMANDES
-            let container = document.getElementById('orders-container');
-            if (!currentUser.orders || currentUser.orders.length === 0) {
-                container.innerHTML = "<p style='color:#777;'>Aucune commande pour le moment.</p>";
-            } else {
-                currentUser.orders.forEach(order => {
-                    container.innerHTML += `
+        // 3. AFFICHAGE DES COMMANDES
+        let container = document.getElementById('orders-container');
+        if (!currentUser.orders || currentUser.orders.length === 0) {
+            container.innerHTML = "<p style='color:#777;'>Aucune commande pour le moment.</p>";
+        } else {
+            currentUser.orders.forEach(order => {
+                container.innerHTML += `
                         <div class="order-item">
                             <div>
                                 <p style="font-weight:bold;">Commande ${order.id}</p>
@@ -108,36 +111,36 @@
                             </div>
                         </div>
                     `;
-                });
-            }
-
-        } else {
-            document.getElementById('login-warning').style.display = 'block';
+            });
         }
 
-        // 4. FONCTION POUR TRAITER L'IMAGE CHOISIE
-        function handleImageUpload(input) {
-            if (input.files && input.files[0]) {
-                const file = input.files[0];
-                
-                // Petit check de taille (max 2Mo pour éviter de faire planter le localStorage)
-                if (file.size > 2000000) {
-                    alert("L'image est trop lourde ! Essayez une image de moins de 2Mo.");
-                    return;
-                }
+    } else {
+        document.getElementById('login-warning').style.display = 'block';
+    }
 
-                const reader = new FileReader();
+    // 4. FONCTION POUR TRAITER L'IMAGE CHOISIE
+    function handleImageUpload(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
 
-                reader.onload = function(e) {
-                    // C'est ici qu'on récupère l'image en format texte (Base64)
-                    const base64Image = e.target.result;
-                    // On appelle la fonction de auth.js pour sauvegarder
-                    saveProfilePicture(base64Image);
-                }
-
-                reader.readAsDataURL(file);
+            // Petit check de taille (max 2Mo pour éviter de faire planter le localStorage)
+            if (file.size > 2000000) {
+                alert("L'image est trop lourde ! Essayez une image de moins de 2Mo.");
+                return;
             }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                // C'est ici qu'on récupère l'image en format texte (Base64)
+                const base64Image = e.target.result;
+                // On appelle la fonction de auth.js pour sauvegarder
+                saveProfilePicture(base64Image);
+            }
+
+            reader.readAsDataURL(file);
         }
-    </script>
+    }
+</script>
 </body>
 </html>

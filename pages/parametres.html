@@ -2,140 +2,148 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Paramètres</title>
     <link href="../style/pages.css" rel="stylesheet">
     <link href="../style/theme.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="../index.html"><i class="fa-solid fa-house"></i> Accueil</a>
-        <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
-        <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
-        <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
-        <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+<div class="sidebar" id="mySidebar">
+    <a class="closebtn" href="javascript:void(0)" onclick="closeNav()">&times;</a>
+    <a href="../index.html"><i class="fa-solid fa-house"></i> Accueil</a>
+    <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
+    <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
+    <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
+    <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+</div>
+
+<header class="site-header">
+    <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
+    <a class="logo" href="../index.html">FUCK THE MODE</a>
+    <div class="cart-icon-container" onclick="window.location.href='panier.html'">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span id="cart-count">0</span>
     </div>
+</header>
 
-    <header class="site-header">
-        <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
-        <a class="logo" href="../index.html">FUCK THE MODE</a>
-        <div class="cart-icon-container" onclick="window.location.href='panier.html'">
-            <i class="fa-solid fa-basket-shopping"></i>
-            <span id="cart-count">0</span>
+<main class="page-container">
+    <h1>Paramètres</h1>
+
+    <div class="settings-group">
+        <h3 style="margin-bottom:15px; color:#aaa;">NOTIFICATIONS</h3>
+        <div class="setting-item">
+            <span>Recevoir les promos par Email</span>
+            <label class="switch"><input checked type="checkbox"><span class="slider"></span></label>
         </div>
-    </header>
-
-    <main class="page-container">
-        <h1>Paramètres</h1>
-
-        <div class="settings-group">
-            <h3 style="margin-bottom:15px; color:#aaa;">NOTIFICATIONS</h3>
-            <div class="setting-item">
-                <span>Recevoir les promos par Email</span>
-                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
-            </div>
-            <div class="setting-item">
-                <span>Notification de commande</span>
-                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
-            </div>
-        </div>
-
-        <div class="settings-group">
-            <h3 style="margin-bottom:15px; color:#aaa;">SÉCURITÉ</h3>
-            
-            <div class="setting-item">
-                <span>Authentification à deux facteurs</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-            </div>
-
-            <div class="setting-item" onclick="openModal()" style="cursor:pointer;">
-                <span>Changer de mot de passe</span>
-                <i class="fa-solid fa-chevron-right" style="color:#666;"></i>
-            </div>
-        </div>
-
-        <div class="settings-group">
-            <h3 style="margin-bottom:15px; color:#aaa;">APPARENCE</h3>
-            <div class="setting-item">
-                <span>Mode Clair</span>
-                <label class="switch">
-                    <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-        </div>
-
-    </main>
-
-    <div id="password-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 style="color:#00BFFF; margin-bottom:20px; text-transform:uppercase;">Changer le mot de passe</h2>
-            
-            <form onsubmit="handlePassChange(event)">
-                <div class="form-group" style="margin-bottom:15px;">
-                    <label style="display:block; margin-bottom:5px; color:#aaa;">Ancien mot de passe</label>
-                    <input type="password" id="old-pass" required style="width:100%; padding:10px; background:#000; border:1px solid #333; color:white;">
-                </div>
-                
-                <div class="form-group" style="margin-bottom:20px;">
-                    <label style="display:block; margin-bottom:5px; color:#aaa;">Nouveau mot de passe</label>
-                    <input type="password" id="new-pass" required style="width:100%; padding:10px; background:#000; border:1px solid #333; color:white;">
-                </div>
-
-                <button type="submit" class="btn-submit" style="width:100%; padding:10px; font-size:1rem;">VALIDER</button>
-            </form>
+        <div class="setting-item">
+            <span>Notification de commande</span>
+            <label class="switch"><input checked type="checkbox"><span class="slider"></span></label>
         </div>
     </div>
 
-    <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+    <div class="settings-group">
+        <h3 style="margin-bottom:15px; color:#aaa;">SÉCURITÉ</h3>
 
-    <script src="../js/favorites.js"></script>
-    <script src="../js/cart.js"></script>
-    <script src="../js/theme.js"></script>
-    <script src="../js/auth.js"></script>
+        <div class="setting-item">
+            <span>Authentification à deux facteurs</span>
+            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
 
-    <script>
-        // GESTION DU BOUTON THÈME
-        document.addEventListener("DOMContentLoaded", () => {
-            const theme = localStorage.getItem('siteTheme');
-            const toggle = document.getElementById('theme-toggle');
-            if (theme === 'light') { toggle.checked = true; } else { toggle.checked = false; }
-        });
+        <div class="setting-item" onclick="openModal()" style="cursor:pointer;">
+            <span>Changer de mot de passe</span>
+            <i class="fa-solid fa-chevron-right" style="color:#666;"></i>
+        </div>
+    </div>
 
-        // GESTION DU MODAL
-        function openModal() {
-            document.getElementById('password-modal').style.display = "flex";
+    <div class="settings-group">
+        <h3 style="margin-bottom:15px; color:#aaa;">APPARENCE</h3>
+        <div class="setting-item">
+            <span>Mode Clair</span>
+            <label class="switch">
+                <input id="theme-toggle" onclick="toggleTheme()" type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+</main>
+
+<div class="modal" id="password-modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 style="color:#00BFFF; margin-bottom:20px; text-transform:uppercase;">Changer le mot de passe</h2>
+
+        <form onsubmit="handlePassChange(event)">
+            <div class="form-group" style="margin-bottom:15px;">
+                <label style="display:block; margin-bottom:5px; color:#aaa;">Ancien mot de passe</label>
+                <input id="old-pass" required
+                       style="width:100%; padding:10px; background:#000; border:1px solid #333; color:white;"
+                       type="password">
+            </div>
+
+            <div class="form-group" style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:5px; color:#aaa;">Nouveau mot de passe</label>
+                <input id="new-pass" required
+                       style="width:100%; padding:10px; background:#000; border:1px solid #333; color:white;"
+                       type="password">
+            </div>
+
+            <button class="btn-submit" style="width:100%; padding:10px; font-size:1rem;" type="submit">VALIDER</button>
+        </form>
+    </div>
+</div>
+
+<footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+
+<script src="../js/favorites.js"></script>
+<script src="../js/cart.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/auth.js"></script>
+
+<script>
+    // GESTION DU BOUTON THÈME
+    document.addEventListener("DOMContentLoaded", () => {
+        const theme = localStorage.getItem('siteTheme');
+        const toggle = document.getElementById('theme-toggle');
+        if (theme === 'light') {
+            toggle.checked = true;
+        } else {
+            toggle.checked = false;
         }
+    });
 
-        function closeModal() {
-            document.getElementById('password-modal').style.display = "none";
+    // GESTION DU MODAL
+    function openModal() {
+        document.getElementById('password-modal').style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById('password-modal').style.display = "none";
+    }
+
+    // Fermer si on clique en dehors de la fenêtre
+    window.onclick = function (event) {
+        let modal = document.getElementById('password-modal');
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
+    }
 
-        // Fermer si on clique en dehors de la fenêtre
-        window.onclick = function(event) {
-            let modal = document.getElementById('password-modal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+    // GESTION DU CHANGEMENT DE MOT DE PASSE
+    function handlePassChange(e) {
+        e.preventDefault();
+        let oldP = document.getElementById('old-pass').value;
+        let newP = document.getElementById('new-pass').value;
+
+        // Appel de la fonction dans auth.js
+        if (changePassword(oldP, newP)) {
+            closeModal(); // On ferme le modal si ça a marché
+            document.getElementById('old-pass').value = ""; // On vide les champs
+            document.getElementById('new-pass').value = "";
         }
-
-        // GESTION DU CHANGEMENT DE MOT DE PASSE
-        function handlePassChange(e) {
-            e.preventDefault();
-            let oldP = document.getElementById('old-pass').value;
-            let newP = document.getElementById('new-pass').value;
-
-            // Appel de la fonction dans auth.js
-            if (changePassword(oldP, newP)) {
-                closeModal(); // On ferme le modal si ça a marché
-                document.getElementById('old-pass').value = ""; // On vide les champs
-                document.getElementById('new-pass').value = "";
-            }
-        }
-    </script>
+    }
+</script>
 </body>
 </html>

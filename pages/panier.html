@@ -2,44 +2,44 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Mon Panier</title>
     <link href="../style/panier.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="../style/theme.css" rel="stylesheet">
 </head>
 <body>
 
-    <header class="site-header">
-        <a class="logo" href="../index.html">FUCK THE MODE</a>
-        <nav class="site-nav">
-            <a href="../index.html"><i class="fa-solid fa-arrow-left"></i> Continuer mes achats</a>
-            <div class="cart-icon-container" style="display:inline-block; position:relative; margin-left:20px;">
-                <i class="fa-solid fa-basket-shopping"></i>
-                <span id="cart-count">0</span>
-            </div>
-        </nav>
-    </header>
-
-    <main class="cart-container">
-        <h1>Votre Panier</h1>
-        <div class="cart-items" id="cart-items-container">
-            </div>
-
-        <div class="cart-total">
-            <div class="total-row"><span>SOUS-TOTAL</span><span id="subtotal">0.00 $</span></div>
-            <div class="total-row"><span>LIVRAISON</span><span>GRATUITE</span></div>
-            <hr>
-            <div class="total-row final"><span>TOTAL</span><span id="grand-total">0.00 $</span></div>
-            
-            <a href="paiement.html" class="checkout-btn">PASSER AU PAIEMENT</a>
+<header class="site-header">
+    <a class="logo" href="../index.html">FUCK THE MODE</a>
+    <nav class="site-nav">
+        <a href="../index.html"><i class="fa-solid fa-arrow-left"></i> Continuer mes achats</a>
+        <div class="cart-icon-container" style="display:inline-block; position:relative; margin-left:20px;">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <span id="cart-count">0</span>
         </div>
-    </main>
+    </nav>
+</header>
 
-    <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+<main class="cart-container">
+    <h1>Votre Panier</h1>
+    <div class="cart-items" id="cart-items-container">
+    </div>
 
-    <script src="../js/data.js"></script>
-    <script src="../js/cart.js"></script>
+    <div class="cart-total">
+        <div class="total-row"><span>SOUS-TOTAL</span><span id="subtotal">0.00 $</span></div>
+        <div class="total-row"><span>LIVRAISON</span><span>GRATUITE</span></div>
+        <hr>
+        <div class="total-row final"><span>TOTAL</span><span id="grand-total">0.00 $</span></div>
+
+        <a class="checkout-btn" href="paiement.html">PASSER AU PAIEMENT</a>
+    </div>
+</main>
+
+<footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+
+<script src="../js/data.js"></script>
+<script src="../js/cart.js"></script>
 <script>
     const container = document.getElementById('cart-items-container');
     let cart = JSON.parse(localStorage.getItem('productsInCart')) || {};
@@ -50,7 +50,7 @@
     } else {
         // On boucle sur les clés du panier (ex: "chemise1-L", "polo2-M")
         Object.keys(cart).forEach(uniqueKey => {
-            
+
             // ON DÉCOUPE LA CLÉ : ID à gauche, Taille à droite
             // split('-') coupe la chaine là où il y a le tiret
             let splitKey = uniqueKey.split('-');
@@ -58,8 +58,8 @@
             let size = splitKey[1];      // ex: L
 
             let product = productsDB[productId];
-            
-            if(product) {
+
+            if (product) {
                 let quantity = cart[uniqueKey];
                 let unitPrice = getPrice(product.price);
                 let linePrice = unitPrice * quantity;
@@ -89,6 +89,6 @@
     document.getElementById('subtotal').innerText = totalAmount.toFixed(2) + " $";
     document.getElementById('grand-total').innerText = totalAmount.toFixed(2) + " $";
 </script>
-    <script src="../js/theme.js"></script>
+<script src="../js/theme.js"></script>
 </body>
 </html>

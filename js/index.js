@@ -1,3 +1,4 @@
+// Recherche de produits dans la page d'accueil
 function searchProducts() {
     let input = document.getElementById('search-input').value.toLowerCase();
     let cards = document.querySelectorAll('.card-link');
@@ -19,6 +20,7 @@ function searchProducts() {
     });
 }
 
+// Filtrer les produits par catégorie
 function filterSelection(category) {
     let items = document.querySelectorAll(".card-link");
     if (category == 'all') category = '';

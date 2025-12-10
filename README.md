@@ -1,6 +1,6 @@
 # Fuck the mode
 
-Fuck the mode est une boutique en ligne dédiée à la vente de vêtements, de chaussures ainsi que de bijoux à caractère 
+Fuck the mode est une boutique en ligne dédiée à la vente de vêtements, de chaussures ainsi que de bijoux à caractère
 déplacé, fais en HTML.
 
 ## Table des matières
@@ -8,7 +8,7 @@ déplacé, fais en HTML.
 \- Technologies
 \- Installation  
 \- Utilisation  
-\- Structure du projet  
+\- Structure du projet
 
 ## Technologies
 
@@ -19,7 +19,7 @@ déplacé, fais en HTML.
 ## Installation
 
 1. Cloner le dépôt (branche principale de travail : `beta`) :
-git clone https://github.com/RIGAT-Pierre-andre-2326090par/fuckTheMode.git
+   git clone https://github.com/RIGAT-Pierre-andre-2326090par/fuckTheMode.git
 
 2. Ouvrir `index.html` dans un navigateur ou servir le dossier via un serveur local (ex : `live-server`).
 

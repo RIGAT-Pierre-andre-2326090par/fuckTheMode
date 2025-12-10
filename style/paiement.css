@@ -103,9 +103,9 @@ body {
 
 /* LE CADRE IMAGE (Taille Parfaite) */
 .img-box {
-    width: 80px;      /* Largeur fixe */
-    height: 80px;     /* Hauteur fixe */
-    flex-shrink: 0;   /* Empêche l'image de s'écraser */
+    width: 80px; /* Largeur fixe */
+    height: 80px; /* Hauteur fixe */
+    flex-shrink: 0; /* Empêche l'image de s'écraser */
     border: 1px solid #444;
     border-radius: 4px;
     overflow: hidden;
@@ -272,7 +272,7 @@ footer {
         align-items: flex-start;
         gap: 5px;
     }
-    
+
     .checkout-container {
         padding: 0 10px;
     }
@@ -282,7 +282,7 @@ footer {
    VERSION MOBILE
    ========================================= */
 @media (max-width: 768px) {
-    
+
     .checkout-container {
         padding: 0 15px;
         margin: 20px auto;
@@ -301,7 +301,7 @@ footer {
     .item-info .price {
         font-size: 1rem;
     }
-    
+
     .item-info h3 {
         font-size: 0.9rem;
     }

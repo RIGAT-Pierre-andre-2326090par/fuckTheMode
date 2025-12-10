@@ -2,94 +2,94 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Connexion / Inscription</title>
     <link href="../style/pages.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <header class="site-header">
-        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer;">FUCK THE MODE</div>
-    </header>
+<header class="site-header">
+    <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer;">FUCK THE MODE</div>
+</header>
 
-    <main class="page-container" style="max-width: 500px;">
-        
-        <div id="login-box">
-            <h1>Connexion</h1>
-            <form onsubmit="handleLogin(event)" class="contact-form">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="login-email" required>
-                </div>
-                <div class="form-group">
-                    <label>Mot de passe</label>
-                    <input type="password" id="login-pass" required>
-                </div>
-                <button type="submit" class="btn-submit">SE CONNECTER</button>
-            </form>
-            <p style="margin-top:20px; text-align:center; color:#888;">
-                Pas encore de compte ? <a href="#" onclick="toggleForm()" style="color:#00BFFF;">Créer un compte</a>
-            </p>
-        </div>
+<main class="page-container" style="max-width: 500px;">
 
-        <div id="register-box" style="display:none;">
-            <h1>Inscription</h1>
-            <form onsubmit="handleRegister(event)" class="contact-form">
-                <div class="form-group">
-                    <label>Nom complet</label>
-                    <input type="text" id="reg-name" required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="reg-email" required>
-                </div>
-                <div class="form-group">
-                    <label>Mot de passe</label>
-                    <input type="password" id="reg-pass" required>
-                </div>
-                <button type="submit" class="btn-submit">CRÉER MON COMPTE</button>
-            </form>
-            <p style="margin-top:20px; text-align:center; color:#888;">
-                Déjà un compte ? <a href="#" onclick="toggleForm()" style="color:#00BFFF;">Se connecter</a>
-            </p>
-        </div>
+    <div id="login-box">
+        <h1>Connexion</h1>
+        <form class="contact-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Email</label>
+                <input id="login-email" required type="email">
+            </div>
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input id="login-pass" required type="password">
+            </div>
+            <button class="btn-submit" type="submit">SE CONNECTER</button>
+        </form>
+        <p style="margin-top:20px; text-align:center; color:#888;">
+            Pas encore de compte ? <a href="#" onclick="toggleForm()" style="color:#00BFFF;">Créer un compte</a>
+        </p>
+    </div>
 
-    </main>
+    <div id="register-box" style="display:none;">
+        <h1>Inscription</h1>
+        <form class="contact-form" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label>Nom complet</label>
+                <input id="reg-name" required type="text">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input id="reg-email" required type="email">
+            </div>
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input id="reg-pass" required type="password">
+            </div>
+            <button class="btn-submit" type="submit">CRÉER MON COMPTE</button>
+        </form>
+        <p style="margin-top:20px; text-align:center; color:#888;">
+            Déjà un compte ? <a href="#" onclick="toggleForm()" style="color:#00BFFF;">Se connecter</a>
+        </p>
+    </div>
 
-    <script src="../js/auth.js"></script>
-    <script>
-        function toggleForm() {
-            let login = document.getElementById('login-box');
-            let reg = document.getElementById('register-box');
-            if (login.style.display === 'none') {
-                login.style.display = 'block';
-                reg.style.display = 'none';
-            } else {
-                login.style.display = 'none';
-                reg.style.display = 'block';
-            }
+</main>
+
+<script src="../js/auth.js"></script>
+<script>
+    function toggleForm() {
+        let login = document.getElementById('login-box');
+        let reg = document.getElementById('register-box');
+        if (login.style.display === 'none') {
+            login.style.display = 'block';
+            reg.style.display = 'none';
+        } else {
+            login.style.display = 'none';
+            reg.style.display = 'block';
         }
+    }
 
-        function handleRegister(e) {
-            e.preventDefault();
-            let name = document.getElementById('reg-name').value;
-            let email = document.getElementById('reg-email').value;
-            let pass = document.getElementById('reg-pass').value;
-            
-            if(registerUser(name, email, pass)) {
-                toggleForm(); // Bascule vers connexion
-            }
-        }
+    function handleRegister(e) {
+        e.preventDefault();
+        let name = document.getElementById('reg-name').value;
+        let email = document.getElementById('reg-email').value;
+        let pass = document.getElementById('reg-pass').value;
 
-        function handleLogin(e) {
-            e.preventDefault();
-            let email = document.getElementById('login-email').value;
-            let pass = document.getElementById('login-pass').value;
-            
-            if(loginUser(email, pass)) {
-                window.location.href = "compte.html"; // Redirection vers le compte
-            }
+        if (registerUser(name, email, pass)) {
+            toggleForm(); // Bascule vers connexion
         }
-    </script>
+    }
+
+    function handleLogin(e) {
+        e.preventDefault();
+        let email = document.getElementById('login-email').value;
+        let pass = document.getElementById('login-pass').value;
+
+        if (loginUser(email, pass)) {
+            window.location.href = "compte.html"; // Redirection vers le compte
+        }
+    }
+</script>
 </body>
 </html>

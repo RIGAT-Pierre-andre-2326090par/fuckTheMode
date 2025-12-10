@@ -1,7 +1,9 @@
+// Connexion à Supabase
 const supabaseUrl = 'https://jmufrhdkzybqpaulnomj.supabase.co';
 const supabaseKey = 'sb_publishable_klXk-f2VdhcOhGp-arJBwg_BoXE7i-c';
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+// Récupération de tous les types de produits
 function getAllTypes() {
     const {data, error} = supabase.from('types').select('*');
 
@@ -13,6 +15,7 @@ function getAllTypes() {
     return data;
 }
 
+// Récupération de tous les produits
 function getAllProducts() {
     const {
         data,
@@ -27,6 +30,7 @@ function getAllProducts() {
     return data;
 }
 
+// Récupération de tous les produits par type ID
 function getAllProductsById(typeID) {
     const {data, error} = supabase.from('product').select('id, Nom, Prix, size(type)').eq('type', typeID);
 
@@ -38,6 +42,7 @@ function getAllProductsById(typeID) {
     return data;
 }
 
+// Récupération d'un produit par son ID
 function getProductById(productID) {
     const {data, error} = supabase.from('product').select('*').eq('id', productID).single();
 
@@ -49,6 +54,7 @@ function getProductById(productID) {
     return data;
 }
 
+// Récupération des tailles disponibles pour un produit donné
 function getSizesByProductId(productID) {
     const {data, error} = supabase.from('sizes').select('size').eq('product_id', productID);
 
@@ -60,6 +66,7 @@ function getSizesByProductId(productID) {
     return data;
 }
 
+// Récupération d'un utilisateur par son ID
 function getUserById(userID) {
     const {data, error} = supabase.from('users').select('email, mot_de_passe').eq('id', userID).single();
 
@@ -71,6 +78,7 @@ function getUserById(userID) {
     return data;
 }
 
+// Récupération des détails d'un utilisateur par son ID
 function getDetailledUserById(userID) {
     const {data, error} = supabase.from('users').select('*').eq('id', userID).single();
 
@@ -82,6 +90,7 @@ function getDetailledUserById(userID) {
     return data;
 }
 
+// Récupération des commandes passées par un utilisateur donné
 function getOrdersByUserId(userID) {
     const {data, error} = supabase.from('commande').select('id').eq('user', userID);
 
@@ -93,6 +102,7 @@ function getOrdersByUserId(userID) {
     return data;
 }
 
+// Récupération des détails d'une commande par son ID
 function getOrderDetailsByOrderId(orderID) {
     const {
         data,
@@ -107,6 +117,7 @@ function getOrderDetailsByOrderId(orderID) {
     return data;
 }
 
+// Récupération du stock d'un produit par son ID
 function getStockByProductId(productID) {
     const {data, error} = supabase.from('stock').select('*').eq('product', productID);
 
@@ -118,6 +129,7 @@ function getStockByProductId(productID) {
     return data;
 }
 
+// Récupération des couleurs et tailles disponibles pour un produit donné
 function getColorAndSizeById(productID) {
     const {data, error} = supabase.from('stock').select('color(color), size(size)').eq('product', productID);
 
@@ -129,6 +141,7 @@ function getColorAndSizeById(productID) {
     return data;
 }
 
+// Récupération des favoris d'un utilisateur donné
 function getFavoritesByUserId(userID) {
     const {data, error} = supabase.from('favorites').select('product').eq('user', userID);
 
@@ -140,6 +153,7 @@ function getFavoritesByUserId(userID) {
     return data;
 }
 
+// Récupération des produits favoris d'un utilisateur donné
 function getFavoriteProductsByUserId(userID) {
     const {data, error} = supabase.from('favorites').select('product(Nom, Prix)').eq('user', userID);
 
@@ -151,6 +165,7 @@ function getFavoriteProductsByUserId(userID) {
     return data;
 }
 
+// Ajout d'un nouvel utilisateur
 function addUser(email, mot_de_passe) {
     const {data, error} = supabase.from('users').insert([{email: email, mot_de_passe: mot_de_passe}]);
 
@@ -162,6 +177,7 @@ function addUser(email, mot_de_passe) {
     return data;
 }
 
+// Ajout d'un favori pour un utilisateur donné
 function addFavorite(userID, productID) {
     const {data, error} = supabase.from('favorites').insert([{user: userID, product: productID}]);
 
@@ -173,6 +189,7 @@ function addFavorite(userID, productID) {
     return data;
 }
 
+// Ajout d'une nouvelle couleur
 function addColor(colorName, color) {
     const {data, error} = supabase.from('colors').insert([{name: colorName, color: color}]);
 
@@ -184,6 +201,7 @@ function addColor(colorName, color) {
     return data;
 }
 
+// Ajout d'un nouveau type de produit
 function addType(typeName) {
     const {data, error} = supabase.from('types').insert([{type: typeName}]);
 
@@ -195,6 +213,7 @@ function addType(typeName) {
     return data;
 }
 
+// Ajout d'une nouvelle taille
 function addSize(size, type) {
     const {data, error} = supabase.from('sizes').insert([{size: size, type: type}]);
 
@@ -206,6 +225,7 @@ function addSize(size, type) {
     return data;
 }
 
+//
 function addProduct(Nom, Prix, type) {
     const {data, error} = supabase.from('product').insert([{Nom: Nom, Prix: Prix, type: type}]);
 
@@ -217,6 +237,7 @@ function addProduct(Nom, Prix, type) {
     return data;
 }
 
+// Ajout d'un nouveau stock avec quantité nulle
 function addStockEmpty(product, color, size) {
     const {data, error} = supabase.from('stock').insert([{product: product, color: color, size: size}]);
 
@@ -228,6 +249,7 @@ function addStockEmpty(product, color, size) {
     return data;
 }
 
+// Ajout d'un nouveau stock avec quantité spécifiée
 function addStock(product, color, size, quantity) {
     const {data, error} = supabase.from('stock').insert([{
         product: product,
@@ -244,6 +266,7 @@ function addStock(product, color, size, quantity) {
     return data;
 }
 
+// Ajout d'une nouvelle commande pour un utilisateur donné
 function addOrder(user) {
     const {data, error} = supabase.from('commande').insert([{user: user}]);
 
@@ -255,6 +278,7 @@ function addOrder(user) {
     return data;
 }
 
+// Ajout du contenu d'une commande
 function addOrderContent(commande, stock, quantity) {
     const {data, error} = supabase.from('commande_content').insert([{
         commande: commande,
@@ -270,6 +294,7 @@ function addOrderContent(commande, stock, quantity) {
     return data;
 }
 
+// Suppression d'un favori pour un utilisateur donné
 function deleteFavorite(userID, productID) {
     const {data, error} = supabase.from('favorites').delete().eq('user', userID).eq('product', productID);
 
@@ -281,6 +306,7 @@ function deleteFavorite(userID, productID) {
     return data;
 }
 
+// Mise à jour de la quantité en stock pour un produit donné
 function updateStockQuantity(productID, colorID, sizeID, newQuantity) {
     const {
         data,
@@ -295,6 +321,7 @@ function updateStockQuantity(productID, colorID, sizeID, newQuantity) {
     return data;
 }
 
+// Mise à jour des détails d'un utilisateur
 function updateUserDetails(userID, newEmail, newMotDePasse, newName, newAddress) {
     const {data, error} = supabase.from('users').update({
         email: newEmail,
@@ -311,6 +338,7 @@ function updateUserDetails(userID, newEmail, newMotDePasse, newName, newAddress)
     return data;
 }
 
+// Mise à jour des détails du stock
 function updateStock(id, productID, colorID, sizeID, newQuantity) {
     const {data, error} = supabase.from('stock').update({
         product: productID,
@@ -327,6 +355,7 @@ function updateStock(id, productID, colorID, sizeID, newQuantity) {
     return data;
 }
 
+// Recherche de produits par nom ou description
 function searchProductsByName(name) {
     const {
         data,

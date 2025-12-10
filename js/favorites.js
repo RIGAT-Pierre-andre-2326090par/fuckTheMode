@@ -1,17 +1,25 @@
-function openNav() { document.getElementById("mySidebar").style.width = "250px"; }
-function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+// Ouvrir la barre latérale
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+}
 
+// Fermer la barre latérale
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+}
+
+// Gérer les favoris
 function toggleFavorite(event, productId) {
-    event.preventDefault(); 
-    event.stopPropagation(); 
+    event.preventDefault();
+    event.stopPropagation();
     let favorites = JSON.parse(localStorage.getItem('myFavorites')) || [];
-    let icon = event.target; 
+    let icon = event.target;
 
     if (favorites.includes(productId)) {
         favorites = favorites.filter(id => id !== productId);
-        icon.classList.remove('fa-solid'); 
+        icon.classList.remove('fa-solid');
         icon.classList.add('fa-regular');
-        icon.style.color = "white"; 
+        icon.style.color = "white";
     } else {
         favorites.push(productId);
         icon.classList.remove('fa-regular');
@@ -21,6 +29,7 @@ function toggleFavorite(event, productId) {
     localStorage.setItem('myFavorites', JSON.stringify(favorites));
 }
 
+// Vérifier le statut du favori au chargement de la page
 function checkFavoriteStatus(productId, iconElement) {
     let favorites = JSON.parse(localStorage.getItem('myFavorites')) || [];
     if (favorites.includes(productId)) {

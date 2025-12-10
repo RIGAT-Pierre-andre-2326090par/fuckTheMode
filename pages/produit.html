@@ -1,61 +1,64 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Détail Produit</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Détail Produit</title>
     <link href="../style/Produits.css" rel="stylesheet">
     <link href="../style/theme.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-  <header class="site-header">
-      <a class="logo" href="../index.html">FUCK THE MODE</a>
+<header class="site-header">
+    <a class="logo" href="../index.html">FUCK THE MODE</a>
     <nav class="site-nav">
         <a href="../index.html"><i class="fa-solid fa-arrow-left"></i> Retour</a>
-    
-    <div class="cart-icon-container" onclick="window.location.href='panier.html'" style="margin-left:20px; cursor:pointer; position: relative; display: inline-block;">
-        <i class="fa-solid fa-basket-shopping"></i>
-        <span id="cart-count" style="position: absolute; top: -8px; right: -10px; background-color: red; color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 50%; border: 1px solid #000;">0</span>
-    </div>
-</nav>
-  </header>
 
-  <main class="site-main">
+        <div class="cart-icon-container" onclick="window.location.href='panier.html'"
+             style="margin-left:20px; cursor:pointer; position: relative; display: inline-block;">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <span id="cart-count"
+                  style="position: absolute; top: -8px; right: -10px; background-color: red; color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 50%; border: 1px solid #000;">0</span>
+        </div>
+    </nav>
+</header>
+
+<main class="site-main">
     <section class="product-page">
         <div class="product-image">
-            <i id="product-fav-btn" class="fa-regular fa-heart product-fav-icon"></i>
-            <img id="product-img" src="" alt="Image produit">
+            <i class="fa-regular fa-heart product-fav-icon" id="product-fav-btn"></i>
+            <img alt="Image produit" id="product-img" src="">
         </div>
         <div class="product-info">
-            <h1 id="product-title" class="product-title">Chargement...</h1>
-            <p id="product-price" class="product-price">-- $</p>
-            <p id="product-desc" class="description">...</p>
+            <h1 class="product-title" id="product-title">Chargement...</h1>
+            <p class="product-price" id="product-price">-- $</p>
+            <p class="description" id="product-desc">...</p>
             <div class="selectors">
                 <div class="selector-group">
                     <label>Taille :</label>
-                    <div class="size-options"><span>S</span><span>M</span><span class="selected">L</span><span>XL</span></div>
+                    <div class="size-options"><span>S</span><span>M</span><span class="selected">L</span><span>XL</span>
+                    </div>
                 </div>
             </div>
             <button class="add-cart">AJOUTER AU PANIER</button>
         </div>
     </section>
     <section class="recommendations-section">
-      <h2 class="section-title">Vous aimerez aussi</h2>
-      <div class="recommendation-grid" id="recommendation-container"></div>
+        <h2 class="section-title">Vous aimerez aussi</h2>
+        <div class="recommendation-grid" id="recommendation-container"></div>
     </section>
-  </main>
+</main>
 
-  <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
+<footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
 
-  <script src="../js/data.js"></script>
-  <script src="../js/cart.js"></script>
-  <script src="../js/favorites.js"></script>
-  <script src="../js/theme.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/cart.js"></script>
+<script src="../js/favorites.js"></script>
+<script src="../js/theme.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        
+
         // --- ON FORCE LA MISE A JOUR DU PANIER ---
         if (typeof updateCartIcon === "function") {
             updateCartIcon();
@@ -65,7 +68,7 @@
         const params = new URLSearchParams(window.location.search);
         const productId = params.get('id');
         const product = productsDB[productId];
-        let selectedSize = 'L'; 
+        let selectedSize = 'L';
 
         if (product) {
             document.getElementById('product-img').src = product.img;
@@ -75,15 +78,15 @@
 
             const favBtn = document.getElementById('product-fav-btn');
             checkFavoriteStatus(productId, favBtn);
-            
-            favBtn.onclick = function(event) { 
-                toggleFavorite(event, productId); 
-                checkFavoriteStatus(productId, favBtn); 
+
+            favBtn.onclick = function (event) {
+                toggleFavorite(event, productId);
+                checkFavoriteStatus(productId, favBtn);
             };
 
             const sizeSpans = document.querySelectorAll('.size-options span');
             sizeSpans.forEach(span => {
-                span.addEventListener('click', function() {
+                span.addEventListener('click', function () {
                     sizeSpans.forEach(s => s.classList.remove('selected'));
                     this.classList.add('selected');
                     selectedSize = this.innerText;
@@ -91,24 +94,24 @@
             });
 
             const btn = document.querySelector('.add-cart');
-            btn.onclick = function() { 
-                addToCart(productId, selectedSize); 
+            btn.onclick = function () {
+                addToCart(productId, selectedSize);
             };
-            
+
             // Lancer les recommandations
             if (typeof generateRecommendations === "function") {
                 generateRecommendations(productId);
             }
 
-        } else { 
-            document.querySelector('.product-info').innerHTML = "<h1>Erreur : Produit introuvable</h1>"; 
+        } else {
+            document.querySelector('.product-info').innerHTML = "<h1>Erreur : Produit introuvable</h1>";
         }
     });
 
     // Fonction Recommandations
     function generateRecommendations(currentId) {
         const container = document.getElementById('recommendation-container');
-        if(!container) return;
+        if (!container) return;
         container.innerHTML = "";
         let allIds = Object.keys(productsDB);
         let availableIds = allIds.filter(id => id !== currentId);

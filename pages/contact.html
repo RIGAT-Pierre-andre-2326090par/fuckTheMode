@@ -2,87 +2,87 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Contactez-nous</title>
     <link href="../style/pages.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="../style/theme.css" rel="stylesheet">
 </head>
 <body>
 
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="../index.html"><i class="fa-solid fa-house"></i> Accueil</a>
-        <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
-        <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
-        <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
-        <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+<div class="sidebar" id="mySidebar">
+    <a class="closebtn" href="javascript:void(0)" onclick="closeNav()">&times;</a>
+    <a href="../index.html"><i class="fa-solid fa-house"></i> Accueil</a>
+    <a href="compte.html"><i class="fa-regular fa-user"></i> Compte</a>
+    <a href="favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
+    <a href="parametres.html"><i class="fa-solid fa-sliders"></i> Paramètres</a>
+    <a href="contact.html"><i class="fa-solid fa-headset"></i> Contactez nous</a>
+</div>
+
+<header class="site-header">
+    <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
+    <a class="logo" href="../index.html">FUCK THE MODE</a>
+    <div class="cart-icon-container" onclick="window.location.href='panier.html'">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span id="cart-count">0</span>
+    </div>
+</header>
+
+<main class="page-container">
+    <h1>Besoin d'aide ?</h1>
+
+    <p style="color:#aaa; margin-bottom:30px;">
+        Un problème avec une commande ? Une question sur une taille ?
+        Remplissez ce formulaire, on vous répond sous 24h.
+    </p>
+
+    <form class="contact-form" onsubmit="envoyerMessage(event)">
+        <div class="form-group">
+            <label>Votre Nom</label>
+            <input placeholder="Ex: Jean Michel" required type="text">
+        </div>
+
+        <div class="form-group">
+            <label>Votre Email</label>
+            <input placeholder="email@exemple.com" required type="email">
+        </div>
+
+        <div class="form-group">
+            <label>Sujet</label>
+            <select style="width:100%; padding:12px; background:#111; border:1px solid #333; color:white; border-radius:4px;">
+                <option>Problème de commande</option>
+                <option>Question sur un produit</option>
+                <option>Retour / Remboursement</option>
+                <option>Autre</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Expliquez-nous votre problème..." required rows="5"></textarea>
+        </div>
+
+        <button class="btn-submit" type="submit">ENVOYER LE MESSAGE</button>
+    </form>
+
+    <div style="margin-top:50px; border-top:1px solid #333; padding-top:20px; text-align:center;">
+        <p><i class="fa-solid fa-envelope" style="color:#00BFFF;"></i> support@fuckthemode.com</p>
+        <p style="margin-top:10px;"><i class="fa-solid fa-phone" style="color:#00BFFF;"></i> +1 514 000 0000</p>
     </div>
 
-    <header class="site-header">
-        <div class="menu-icon" onclick="openNav()"><i class="fa-solid fa-bars"></i></div>
-        <a class="logo" href="../index.html">FUCK THE MODE</a>
-        <div class="cart-icon-container" onclick="window.location.href='panier.html'">
-            <i class="fa-solid fa-basket-shopping"></i>
-            <span id="cart-count">0</span>
-        </div>
-    </header>
+</main>
 
-    <main class="page-container">
-        <h1>Besoin d'aide ?</h1>
-        
-        <p style="color:#aaa; margin-bottom:30px;">
-            Un problème avec une commande ? Une question sur une taille ? 
-            Remplissez ce formulaire, on vous répond sous 24h.
-        </p>
+<footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
 
-        <form class="contact-form" onsubmit="envoyerMessage(event)">
-            <div class="form-group">
-                <label>Votre Nom</label>
-                <input type="text" placeholder="Ex: Jean Michel" required>
-            </div>
-
-            <div class="form-group">
-                <label>Votre Email</label>
-                <input type="email" placeholder="email@exemple.com" required>
-            </div>
-
-            <div class="form-group">
-                <label>Sujet</label>
-                <select style="width:100%; padding:12px; background:#111; border:1px solid #333; color:white; border-radius:4px;">
-                    <option>Problème de commande</option>
-                    <option>Question sur un produit</option>
-                    <option>Retour / Remboursement</option>
-                    <option>Autre</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Message</label>
-                <textarea rows="5" placeholder="Expliquez-nous votre problème..." required></textarea>
-            </div>
-
-            <button type="submit" class="btn-submit">ENVOYER LE MESSAGE</button>
-        </form>
-
-        <div style="margin-top:50px; border-top:1px solid #333; padding-top:20px; text-align:center;">
-            <p><i class="fa-solid fa-envelope" style="color:#00BFFF;"></i> support@fuckthemode.com</p>
-            <p style="margin-top:10px;"><i class="fa-solid fa-phone" style="color:#00BFFF;"></i> +1 514 000 0000</p>
-        </div>
-
-    </main>
-
-    <footer class="site-footer"><p>&copy; 2025 FUCK THE MODE.</p></footer>
-
-    <script src="../js/favorites.js"></script>
-    <script src="../js/cart.js"></script>
-    <script>
-        function envoyerMessage(e) {
-            e.preventDefault();
-            alert("Message envoyé ! On revient vers vous très vite.");
-            window.location.reload();
-        }
-    </script>
-    <script src="../js/theme.js"></script>
+<script src="../js/favorites.js"></script>
+<script src="../js/cart.js"></script>
+<script>
+    function envoyerMessage(e) {
+        e.preventDefault();
+        alert("Message envoyé ! On revient vers vous très vite.");
+        window.location.reload();
+    }
+</script>
+<script src="../js/theme.js"></script>
 </body>
 </html>
