@@ -68,7 +68,7 @@
         let selectedSize = 'L'; 
 
         if (product) {
-            document.getElementById('product-img').src = product.img;
+            document.getElementById('product-img').src = '../' + product.img;
             document.getElementById('product-title').innerText = product.title;
             document.getElementById('product-price').innerText = product.price;
             document.getElementById('product-desc').innerText = product.desc;
@@ -121,7 +121,7 @@
             let recProduct = productsDB[id];
             container.innerHTML += `
             <a href="produit.html?id=${id}" class="rec-card">
-                <div class="rec-img-box"><img src="${recProduct.img}" alt="${recProduct.title}"></div>
+                <div class="rec-img-box"><img src="../${recProduct.img}" alt="${recProduct.title}"></div>
                 <div class="rec-info"><h3>${recProduct.title}</h3><p class="rec-price">${recProduct.price}</p></div>
             </a>`;
         });

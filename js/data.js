@@ -1,13 +1,38 @@
 const productsDB = {
     // CHEMISES
-    "chemise1": { title: "Chemise Péroquet", price: "55.00 $", img: "img/chemise 1.jpg", desc: "Coupe droite, col rigide." },
-    "chemise2": { title: "Chemise Méduse", price: "55.00 $", img: "img/chemise 2.jpg", desc: "Élégance sous marine." },
-    "chemise3": { title: "Chemise Vintage", price: "55.00 $", img: "img/chemise 3.jpeg", desc: "Confort total." },
-    "chemise4": { title: "Chemise Oversize", price: "55.00 $", img: "img/chemise 4.webp", desc: "comme si tu taf dans la restauration." },
-    "chemise5": { title: "Chemise Plage", price: "55.00 $", img: "img/chemise 5.webp", desc: "t'as le droit de le mettre hiver." },
-    "chemise6": { title: "Chemise mexico", price: "55.00 $", img: "img/chemise 6.webp", desc: "trèèeèeèeèeèeès expréssif." },
-    "chemise7": { title: "Chemise motif doré", price: "55.00 $", img: "img/chemise 7.avif", desc: "genre versace mais c'est pas ça." },
-    "chemise8": { title: "Chemise noire", price: "55.00 $", img: "img/chemise 8.webp", desc: "Style rétro authentique." },
+    "chemise1": {
+        title: "Chemise Péroquet",
+        price: "55.00 $",
+        img: "img/chemise1.jpg",
+        desc: "Coupe droite, col rigide."
+    },
+    "chemise2": {title: "Chemise Méduse", price: "55.00 $", img: "img/chemise2.jpg", desc: "Élégance sous marine."},
+    "chemise3": {title: "Chemise Vintage", price: "55.00 $", img: "img/chemise3.jpeg", desc: "Confort total."},
+    "chemise4": {
+        title: "Chemise Oversize",
+        price: "55.00 $",
+        img: "img/chemise4.webp",
+        desc: "comme si tu taf dans la restauration."
+    },
+    "chemise5": {
+        title: "Chemise Plage",
+        price: "55.00 $",
+        img: "img/chemise5.webp",
+        desc: "t'as le droit de le mettre hiver."
+    },
+    "chemise6": {
+        title: "Chemise mexico",
+        price: "55.00 $",
+        img: "img/chemise6.webp",
+        desc: "trèèeèeèeèeèeès expréssif."
+    },
+    "chemise7": {
+        title: "Chemise motif doré",
+        price: "55.00 $",
+        img: "img/chemise7.avif",
+        desc: "genre versace mais c'est pas ça."
+    },
+    "chemise8": {title: "Chemise noire", price: "55.00 $", img: "img/chemise8.webp", desc: "Style rétro authentique."},
 
     // POLOS
     "polo1": { title: "Polo motif", price: "50.00 $", img: "img/polo1.webp", desc: "Coton piqué." },

@@ -54,7 +54,7 @@
                     let quantity = cart[uniqueKey];
                     let linePrice = getPrice(product.price) * quantity;
                     totalAmount += linePrice;
-                    container.innerHTML += `<div class="cart-item"><div class="img-box"><img src="${product.img}" alt="${product.title}"></div><div class="item-info"><div><h3>${product.title} (x${quantity})</h3><p style="font-size:0.8rem; color:#aaa;">Taille : ${size}</p></div><p class="price">${linePrice.toFixed(2)} $</p></div></div>`;
+                    container.innerHTML += `<div class="cart-item"><div class="img-box"><img src="../${product.img}" alt="${product.title}"></div><div class="item-info"><div><h3>${product.title} (x${quantity})</h3><p style="font-size:0.8rem; color:#aaa;">Taille : ${size}</p></div><p class="price">${linePrice.toFixed(2)} $</p></div></div>`;
                 }
             });
             document.getElementById('checkout-total').innerText = totalAmount.toFixed(2) + " $";
