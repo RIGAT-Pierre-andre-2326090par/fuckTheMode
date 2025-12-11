@@ -1,4 +1,5 @@
 function registerUser(name, email, password) {
+    password = bcrypt.hashSync(password);
     let users = JSON.parse(localStorage.getItem('usersDB')) || [];
     if (users.find(user => user.email === email)) { alert("Email déjà utilisé !"); return false; }
     let newUser = { name: name, email: email, password: password, orders: [], profilePic: null };
@@ -10,7 +11,7 @@ function registerUser(name, email, password) {
 
 function loginUser(email, password) {
     let users = JSON.parse(localStorage.getItem('usersDB')) || [];
-    let user = users.find(u => u.email === email && u.password === password);
+    let user = users.find(u => u.email === email && bcrypt.compareSync(password, u.password));
     if (user) { localStorage.setItem('currentUser', JSON.stringify(user)); return true; }
     else { alert("Erreur identifiants"); return false; }
 }
@@ -53,9 +54,14 @@ function saveProfilePicture(base64Image) {
 }
 
 function changePassword(oldPass, newPass) {
+    oldPass = bcrypt.hashSync(oldPass);
+    newPass = bcrypt.hashSync(newPass);
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (!currentUser) return false;
-    if (currentUser.password !== oldPass) { alert("Ancien mot de passe incorrect !"); return false; }
+    if (!bcrypt.compareSync(currentUser.password, oldPass)) {
+        alert("Ancien mot de passe incorrect !");
+        return false;
+    }
     currentUser.password = newPass;
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
     let users = JSON.parse(localStorage.getItem('usersDB'));

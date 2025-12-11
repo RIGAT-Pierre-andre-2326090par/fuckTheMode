@@ -1,6 +1,28 @@
-body.light-mode { background-color: #f4f4f4; color: #111; }
-body.light-mode .card, body.light-mode .cart-item, body.light-mode .checkout-form, body.light-mode .cart-summary, body.light-mode .cart-total, body.light-mode .profile-header, body.light-mode .order-item, body.light-mode .settings-group, body.light-mode .fav-card, body.light-mode .modal-content, body.light-mode textarea, body.light-mode select { background-color: #ffffff; border-color: #ddd; color: #000; }
-body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode .logo, body.light-mode .close-modal { color: #000; }
-body.light-mode input { background-color: #fff; color: #000; border: 1px solid #ccc; }
-body.light-mode .price, body.light-mode .product-price, body.light-mode .fav-price, body.light-mode .item-total, body.light-mode .total-price { color: #007ea7; }
-body.light-mode .overlay, body.light-mode .product-image img, body.light-mode .item-img img, body.light-mode .rec-img-box { border-color: #00BFFF; }
+body.light-mode {
+    background-color: #f4f4f4;
+    color: #111;
+}
+
+body.light-mode .card, body.light-mode .cart-item, body.light-mode .checkout-form, body.light-mode .cart-summary, body.light-mode .cart-total, body.light-mode .profile-header, body.light-mode .order-item, body.light-mode .settings-group, body.light-mode .fav-card, body.light-mode .modal-content, body.light-mode textarea, body.light-mode select {
+    background-color: #ffffff;
+    border-color: #ddd;
+    color: #000;
+}
+
+body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode .logo, body.light-mode .close-modal {
+    color: #000;
+}
+
+body.light-mode input {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+}
+
+body.light-mode .price, body.light-mode .product-price, body.light-mode .fav-price, body.light-mode .item-total, body.light-mode .total-price {
+    color: #007ea7;
+}
+
+body.light-mode .overlay, body.light-mode .product-image img, body.light-mode .item-img img, body.light-mode .rec-img-box {
+    border-color: #00BFFF;
+}
