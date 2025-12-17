@@ -46,8 +46,8 @@
                 if (product) {
                     container.innerHTML += `
                         <div class="fav-card">
-                            <button class="remove-fav" onclick="removeFav(event, '${id}')"><i class="fa-solid fa-trash"></i></button>
-                            <a href="produit.html?id=${id}" style="text-decoration:none; color:inherit;">
+                            <button class="remove-fav" onclick="removeFav(event, '${id}')"><i class="fa-sol${id} fa-trash"></i></button>
+                            <a href="produit.html?id=id" style="text-decoration:none; color:inherit;">
                                 <img src="${product.img}" alt="${product.title}">
                                 <div class="fav-info"><h3 class="fav-title">${product.title}</h3><p class="fav-price">${product.price}</p></div>
                             </a>

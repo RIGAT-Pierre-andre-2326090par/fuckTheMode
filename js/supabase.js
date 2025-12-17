@@ -166,7 +166,7 @@ function updateStock(id, productID, colorID, sizeID, newQuantity) {
 export { updateStock };
 
 function searchProductsByName(name) {
-    return supabase.from('products').select('id').ilike('Nom', `%${name}%`);
+    return supabase.from('products').select('id').ilike('Nom', `%${name}%`).or('Description::text.ilike.%' + name + '%');
 }
 
 export {searchProductsByName};
